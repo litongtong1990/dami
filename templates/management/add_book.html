@@ -14,38 +14,38 @@
                 {% endif %}
                 <form method="POST" role="form" class="form-horizontal">
                     {% csrf_token %}
-                    <h1 class="form-signin-heading text-center">添加图书</h1>
+                    <h1 class="form-signin-heading text-center">添加溯源信息</h1>
 
                     <div class="form-group">
-                        <label for="id_name" class="col-md-3 control-label">书名：</label>
+                        <label for="id_name" class="col-md-3 control-label">产品名称：</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" id="id_name" required name="name" autofocus>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="id_author" class="col-md-3 control-label">作者：</label>
+                        <label for="id_author" class="col-md-3 control-label">种子品种：</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" required name="author" id="id_author">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="id_category" class="col-md-3 control-label">类型：</label>
+                        <label for="id_category" class="col-md-3 control-label">施肥时间：</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" required name="category" id="id_category">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="id_price" class="col-md-3 control-label">价格：</label>
+                        <label for="id_price" class="col-md-3 control-label">其他信息：</label>
                         <div class="col-md-9">
                             <input type="text" class="form-control" required name="price" id="id_price">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="id_pubdate" class="col-md-3 control-label">出版日期：</label>
+                        <label for="id_pubdate" class="col-md-3 control-label">施肥时间：</label>
                         <div class="col-md-9">
                             <input type="date" class="form-control" required name="publish_date" id="id_pubdate">
                         </div>

@@ -7,6 +7,9 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from models import MyUser, Book, Img
 from django.core.urlresolvers import reverse, reverse_lazy
 from utils import permission_check
+import qrcode
+from cStringIO import StringIO
+from django.http import HttpResponse
 
 
 def index(request):
@@ -106,10 +109,12 @@ def add_book(request):
     user = request.user
     state = None
     if request.method == 'POST':
+        
+
         new_book = Book(
                 name=request.POST.get('name', ''),
                 author=request.POST.get('author', ''),
-                book_type=request.POST.get('book_type', ''),
+                category=request.POST.get('book_type', ''),
                 price=request.POST.get('price', 0),
                 publish_date=request.POST.get('publish_date', '')
         )
@@ -156,6 +161,61 @@ def view_book_list(request):
     return render(request, 'management/view_book_list.html', content)
 
 
+
+
+
+def video(request):
+    user = request.user if request.user.is_authenticated() else None
+    category_list = Book.objects.values_list('category', flat=True).distinct()
+    query_category = request.GET.get('category', 'all')
+    if (not query_category) or Book.objects.filter(category=query_category).count() is 0:
+        query_category = 'all'
+        book_list = Book.objects.all()
+    else:
+        book_list = Book.objects.filter(category=query_category)
+
+    if request.method == 'POST':
+        keyword = request.POST.get('keyword', '')
+        book_list = Book.objects.filter(name__contains=keyword)
+        query_category = 'all'
+
+    paginator = Paginator(book_list, 5)
+    page = request.GET.get('page')
+    try:
+        book_list = paginator.page(page)
+    except PageNotAnInteger:
+        book_list = paginator.page(1)
+    except EmptyPage:
+        book_list = paginator.page(paginator.num_pages)
+    content = {
+        'user': user,
+        'active_menu': 'realtime_video',
+        'category_list': category_list,
+        'query_category': query_category,
+        'book_list': book_list,
+    }
+    return render(request, 'management/video.html', content)
+
+
+
+
+# This function is to for generate the qrcode for a specific URL
+def generate_qrcode(request, product_name):
+    url="http://10.140.41.190:8000/polls/"+product_name
+    print "====="
+    print url
+    print "====="
+    img = qrcode.make(url)
+    buf = StringIO()
+    img.save(buf)
+    image_stream = buf.getvalue()
+    response = HttpResponse(image_stream, content_type="image/png")
+    response['Last-Modified'] = 'Mon, 27 Apr 2015 02:05:03 GMT'
+    response['Cache-Control'] = 'max-age=31536000'
+    return response
+
+
+
 def detail(request):
     user = request.user if request.user.is_authenticated() else None
     book_id = request.GET.get('id', '')
@@ -173,19 +233,24 @@ def detail(request):
     return render(request, 'management/detail.html', content)
 
 
+
 @user_passes_test(permission_check, login_url=reverse_lazy('login'))
 def add_img(request):
     user = request.user
     state = None
+    name = None
+
     if request.method == 'POST':
         try:
-            new_img = Img(
-                    name=request.POST.get('name', ''),
-                    description=request.POST.get('description', ''),
-                    img=request.FILES.get('img', ''),
-                    book=Book.objects.get(pk=request.POST.get('book', ''))
-            )
-            new_img.save()
+            name=request.POST.get('name', '')
+            # new_img = Img(
+            #         name=request.POST.get('name', ''),
+            #         description=request.POST.get('description', ''),
+            #         img=request.FILES.get('img', ''),
+            #         book=Book.objects.get(pk=request.POST.get('book', ''))
+            # )
+            # new_img.save()
+        
         except Exception, e:
             state = 'error'
             print e
@@ -196,5 +261,6 @@ def add_img(request):
         'state': state,
         'book_list': Book.objects.all(),
         'active_menu': 'add_img',
+        'name':name,
     }
     return render(request, 'management/add_img.html', content)
