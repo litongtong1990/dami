@@ -200,7 +200,7 @@ def video(request):
 
 
 # This function is to for generate the qrcode for a specific URL
-def generate_qrcode(request, product_name):
+def qrcode_generate_page(request, product_name):
     url="http://10.140.41.190:8000/polls/"+product_name
     print "====="
     print url
@@ -235,7 +235,7 @@ def detail(request):
 
 
 @user_passes_test(permission_check, login_url=reverse_lazy('login'))
-def add_img(request):
+def generate_qrcode(request):
     user = request.user
     state = None
     name = None
@@ -263,4 +263,4 @@ def add_img(request):
         'active_menu': 'add_img',
         'name':name,
     }
-    return render(request, 'management/add_img.html', content)
+    return render(request, 'management/generate_qrcode.html', content)
