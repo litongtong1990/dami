@@ -78,23 +78,19 @@ def json_test(request):
     sensor_lux_adr = 1
     sensor_lux_adr = 1
 
-
-
-
     master = modbus_tcp.TcpMaster(host= gate_adr, port = gate_port)
     master.set_timeout(5.0)
 
     temperature_humidity = master.execute(sensor_temp_adr, cst.READ_HOLDING_REGISTERS, 0, 2)
 
-
-
     temperature = temperature_humidity[0]
     humidity= temperature_humidity[1]
     lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
-    print "========="
-    print temperature_humidity
-    print lux
-    print "========="
+    
+    # print "========="
+    # print temperature_humidity
+    # print lux
+    # print "========="
     
 
     content = {
@@ -353,3 +349,42 @@ def generate_qrcode(request):
         'name':name,
     }
     return render(request, 'management/generate_qrcode.html', content)
+
+
+def realtime_info(request):
+    user = request.user
+    state = None
+    name = None
+
+    if request.method == 'POST':
+        try:
+            name=request.POST.get('name', '')
+            # new_img = Img(
+            #         name=request.POST.get('name', ''),
+            #         description=request.POST.get('description', ''),
+            #         img=request.FILES.get('img', ''),
+            #         book=Book.objects.get(pk=request.POST.get('book', ''))
+            # )
+            # new_img.save()
+        
+        except Exception, e:
+            state = 'error'
+            print e
+        else:
+            state = 'success'
+    content = {
+        'user': user,
+        'state': state,
+        'book_list': Book.objects.all(),
+        'active_menu': 'add_img',
+        'name':name,
+    }
+    return render(request, 'management/realtime_info.html', content)
+
+
+
+
+
+
+
+
