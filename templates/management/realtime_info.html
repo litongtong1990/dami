@@ -77,7 +77,7 @@
                                 function startrequest() {
                                     $.getJSON('/json_test', function(data) {
                                         $.each(data, function(index, element) {
-                                                console.log(index+" : "+ element);   
+                                                //console.log(index+" : "+ element);   
                                                 $("#"+index).text(element);                                                
                                         });
                                     });
