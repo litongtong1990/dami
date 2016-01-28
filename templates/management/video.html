@@ -9,10 +9,6 @@
 
 
 
-
-
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
@@ -33,27 +29,122 @@
 
  -->
 
+<!--                         <a  class="list-group-item" id="id_category_all">
+                            全部视频
+                        </a>
+
+                        <a  class="list-group-item" id="id_category_1">
+                            摄像头一
+                        </a>
+                        <a  class="list-group-item" id="id_category_2" data-target="#myModal">
+                            摄像头二
+                        </a> -->
+
+
+
+                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#video1">
+                            摄像头一
+                        </button>
+                        <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#video2">
+                            摄像头二
+                        </button>
                     </div>
                     <script type="text/javascript">
                         $('#id_category_{{ query_category }}').addClass("active");
                     </script>
+
                 </div>
+                
+                <div class="col-md-9 col-md-offset-1" id="a1">  
+                    <div class="modal fade" id="video1" role="dialog" >
+                    </div>
+                
+                      <script type="text/javascript">
+                        var flashvars={
+                            f:'rtmp://139.196.10.27:1935/live/test.stream',
+                            c:0,
+                            p:1,
+                            v:0,
+                            lv:'1',
+                            loaded:'loadedHandler'
+                        };
+                        var video=['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
+                        CKobject.embed('/static/ckplayer/ckplayer.swf','video1','ckplayer_a1','600','400',false,flashvars,video);
+                        </script>
+
+
+                      <div class="modal fade" id="video2" role="dialog">
+                      </div>
+
+                
+                  <script type="text/javascript">
+                    var flashvars={
+                        f:'rtmp://139.196.10.27:1935/live/IPC_2.stream',
+                        c:0,
+                        p:1,
+                        v:0,
+                        lv:'1',
+                        loaded:'loadedHandler'
+                    };
+                    var video=['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
+                    CKobject.embed('/static/ckplayer/ckplayer.swf','video2','ckplayer_a1','600','400',false,flashvars,video);
+                    
+                    </script>
+                </div>
+
+
+
+<!-- 
+
+
                 <div class="col-md-9 col-md-offset-1" id="a1">  
                 </div>
+                
+
                 <script type="text/javascript">
-                 var flashvars={
+                
+
+                // var flashvars={
                     
-                    //f:'ftp://10.140.29.24/xxx/demov2.mp4',
-                    f:'rtmp://live.hkstv.hk.lxdns.com/live/hks',
-                    c:0,
-                    loaded:'loadedHandler'
-                };
+                //     //f:'ftp://10.140.29.24/xxx/demov2.mp4',
+                //     //f:'rtmp://live.hkstv.hk.lxdns.com/live/hks',
+                //     f:'rtmp://139.196.10.27:1935/live/test.stream',
+                //     c:0,
+                //     loaded:'loadedHandler'
+                // };
+
+
+            var flashvars={
+                f:'rtmp://139.196.10.27:1935/live/test.stream',
+                //f:'rtmp://139.196.10.27:1935/vod/mp4:sample.mp4',
+                //f:'ftp://10.140.29.24/xxx/demov2.mp4',
+                //f:'rtmp://live.hkstv.hk.lxdns.com/live/hks',
+                c:0,
+                p:1,
+                v:0,
+                lv:'1',
+                loaded:'loadedHandler'
+            };
 
                 var video=['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
                 CKobject.embed('/static/ckplayer/ckplayer.swf','a1','ckplayer_a1','600','400',false,flashvars,video);
+                //CKobject.embed('','a1','ckplayer_a1','600','400',false,flashvars,video);
                 </script>
 
             </div>
+
+
+
+ -->
+
+
+            <!-- Modal -->
+
+
+
+
+
+
         </div>
     </div>
 
