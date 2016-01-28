@@ -10,6 +10,35 @@ from utils import permission_check
 import qrcode
 from cStringIO import StringIO
 from django.http import HttpResponse
+import json
+
+
+
+
+#====== this is added for sensor===============
+try:
+    # python 3
+    from urllib.parse import urlencode
+except ImportError:
+    # python 2
+    from urllib import urlencode
+
+#import pycurl
+from StringIO import StringIO
+
+
+import sys
+import logging
+#import modbus_tk_min.modbus
+#import modbus_tk_min.defines as cst
+#import modbus_tk_min.modbus_tcp as modbus_tcp
+import modbus_tk.modbus
+import modbus_tk.defines as cst
+import modbus_tk.modbus_tcp as modbus_tcp
+import time
+##################################################
+
+
 
 
 def index(request):
@@ -19,6 +48,66 @@ def index(request):
         'user': user,
     }
     return render(request, 'management/index.html', content)
+
+
+
+
+
+# this is for add the temperature_humidity and lux
+def json_test(request):
+
+    server_location = "external"
+    server_location = "internal"
+
+    os_env = "linux"
+    os_env = "windows"
+
+    total_count = 10000000
+    count = 0
+    sleep_time = 0.1
+
+    gate_adr = '101.86.93.63'
+    #gate_adr = '192.168.1.100'
+    #gate_adr = '192.168.0.201'
+    #gate_adr = '192.168.0.200'
+    gate_port = 502
+
+    sensor_temp_adr = 8
+    sensor_temp_adr = 9
+
+    sensor_lux_adr = 1
+    sensor_lux_adr = 1
+
+
+
+
+    master = modbus_tcp.TcpMaster(host= gate_adr, port = gate_port)
+    master.set_timeout(5.0)
+
+    temperature_humidity = master.execute(sensor_temp_adr, cst.READ_HOLDING_REGISTERS, 0, 2)
+
+
+
+    temperature = temperature_humidity[0]
+    humidity= temperature_humidity[1]
+    lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
+    print "========="
+    print temperature_humidity
+    print lux
+    print "========="
+    
+
+    content = {
+        'temperature': temperature,
+        'humidity': humidity,
+        'lux':lux
+    }
+    jsondata = json.dumps(content) 
+    return HttpResponse(jsondata)
+
+
+
+
 
 
 def signup(request):
