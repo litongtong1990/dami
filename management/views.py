@@ -4,14 +4,14 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import MyUser, Book, Img
+from models import MyUser, Book, Img,Environment
 from django.core.urlresolvers import reverse, reverse_lazy
 from utils import permission_check
 import qrcode
 from cStringIO import StringIO
 from django.http import HttpResponse
 import json
-
+from django.utils import timezone
 
 
 
@@ -51,8 +51,6 @@ def index(request):
 
 
 
-
-
 # this is for add the temperature_humidity and lux
 def json_test(request):
 
@@ -67,9 +65,7 @@ def json_test(request):
     sleep_time = 0.1
 
     gate_adr = '101.86.93.63'
-    #gate_adr = '192.168.1.100'
-    #gate_adr = '192.168.0.201'
-    #gate_adr = '192.168.0.200'
+
     gate_port = 502
 
     sensor_temp_adr = 8
@@ -86,22 +82,19 @@ def json_test(request):
     temperature = temperature_humidity[0]
     humidity= temperature_humidity[1]
     lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
-    
-    # print "========="
-    # print temperature_humidity
-    # print lux
-    # print "========="
-    
 
     content = {
         'temperature': temperature,
         'humidity': humidity,
         'lux':lux
     }
+
+
+    E = Environment(temperature=temperature, humidity=humidity,light=lux,record_date=timezone.now())
+    E.save()
+
     jsondata = json.dumps(content) 
     return HttpResponse(jsondata)
-
-
 
 
 
@@ -352,7 +345,7 @@ def generate_qrcode(request):
 
 
 def realtime_info(request):
-    user = request.user
+    user = request.user if request.user.is_authenticated() else None
     state = None
     name = None
 

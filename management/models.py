@@ -38,3 +38,17 @@ class Img(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+
+
+class Environment(models.Model):
+    temperature=models.FloatField(null=True, blank=True, default=None)
+    humidity=models.FloatField(null=True, blank=True, default=None)
+    # wind_speed=models.FloatField(null=True, blank=True, default=None)
+    # wind_direction=models.FloatField(null=True, blank=True, default=None)
+    light=models.FloatField(null=True, blank=True, default=None)
+    # soid_temperature=models.FloatField(null=True, blank=True, default=None)
+    # soid_humidity=models.FloatField(null=True, blank=True, default=None)
+    # product_name = models.CharField(max_length=200,default=None)
+    record_date = models.DateTimeField(default=None)
