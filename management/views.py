@@ -376,7 +376,7 @@ def realtime_info(request):
         'user': user,
         'state': state,
         'book_list': Book.objects.all(),
-        'active_menu': 'add_img',
+        'active_menu': 'realtime_info',
         'name':name,
     }
     return render(request, 'management/realtime_info.html', content)

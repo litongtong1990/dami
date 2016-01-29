@@ -1,5 +1,5 @@
 {% extends "management/base.html" %}
-{% block title %}生成二维码{% endblock %}
+{% block title %}实时数据测试{% endblock %}
 
 {% block content %}
 
@@ -15,18 +15,6 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
-                
-
-                {% if state == 'success' %}
-                    <div class="well">
-                        <h2 class="text-success text-center">生成二维码成功</h2>
-                    </div>
-                {% elif state == 'error' %}
-                    <div class="well">
-                        <h2 class="text-danger text-center">生成二维码失败</h2>
-                    </div>
-                {% endif %}
-                
 
                 <div class="row">
                     
@@ -91,15 +79,6 @@
                     </div>
                     
                     
-                    <div class="col-sm-4">
-                        {% if state == 'success' %}
-                            <h3 class="form-signin-heading text-center">二维码</h3>
-                            <img src="/qrcode/{{name}}/" alt="Random Name">
-
-
-                        {% endif %}
-
-                    </div>
                 
                 </div>
 
