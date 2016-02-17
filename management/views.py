@@ -72,11 +72,11 @@ def my_scheduled_job():
     humidity= temperature_humidity[1]
     lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
 
-    content = {
-        'temperature': temperature,
-        'humidity': humidity,
-        'lux':lux
-    }
+    # content = {
+    #     'temperature': temperature,
+    #     'humidity': humidity,
+    #     'lux':lux
+    # }
 
 
     E = Environment(temperature=temperature, humidity=humidity,light=lux,record_date=timezone.now())
@@ -137,8 +137,8 @@ def json_test(request):
     }
 
 
-    E = Environment(temperature=temperature, humidity=humidity,light=lux,record_date=timezone.now())
-    E.save()
+    # E = Environment(temperature=temperature, humidity=humidity,light=lux,record_date=timezone.now())
+    # E.save()
 
     jsondata = json.dumps(content) 
     return HttpResponse(jsondata)
