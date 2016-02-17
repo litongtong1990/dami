@@ -100,9 +100,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 CRONJOBS = [
-    ('*/1 * * * *', 'management.apps.my_scheduled_job'),
-    ('*/1 * * * *', 'management.views.my_scheduled_job_1')
 
+    ('*/1 * * * *', 'management.views.my_scheduled_job')
 
 ]
 
