@@ -41,6 +41,53 @@ import time
 
 
 
+def my_scheduled_job():
+
+    server_location = "external"
+    server_location = "internal"
+
+    os_env = "linux"
+    os_env = "windows"
+
+    total_count = 10000000
+    count = 0
+    sleep_time = 0.1
+
+    gate_adr = '101.86.93.63'
+
+    gate_port = 502
+
+    sensor_temp_adr = 8
+    sensor_temp_adr = 9
+
+    sensor_lux_adr = 1
+    sensor_lux_adr = 1
+
+    master = modbus_tcp.TcpMaster(host= gate_adr, port = gate_port)
+    master.set_timeout(5.0)
+
+    temperature_humidity = master.execute(sensor_temp_adr, cst.READ_HOLDING_REGISTERS, 0, 2)
+
+    temperature = temperature_humidity[0]
+    humidity= temperature_humidity[1]
+    lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
+
+    content = {
+        'temperature': temperature,
+        'humidity': humidity,
+        'lux':lux
+    }
+
+
+    E = Environment(temperature=temperature, humidity=humidity,light=lux,record_date=timezone.now())
+    E.save()
+    print "save the sensor data to database successfully!"
+
+
+
+
+
+
 def index(request):
     user = request.user if request.user.is_authenticated() else None
     content = {
@@ -349,6 +396,10 @@ def realtime_info(request):
     state = None
     name = None
 
+    latest_data=Environment.objects.order_by('-record_date')[0:3]
+
+
+
     if request.method == 'POST':
         try:
             name=request.POST.get('name', '')
@@ -371,6 +422,7 @@ def realtime_info(request):
         'book_list': Book.objects.all(),
         'active_menu': 'realtime_info',
         'name':name,
+        'latest_data':latest_data
     }
     return render(request, 'management/realtime_info.html', content)
 

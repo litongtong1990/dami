@@ -8,7 +8,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         setInterval("startrequest()",1000); 
-        $('table.highchart').highchartTable();
+        //$('table.highchart').highchartTable();
 
 
         }); 
@@ -25,14 +25,15 @@
                     <div class="col-sm-8">
                         <form method="POST" role="form" class="form-horizontal" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <h3 class="form-signin-heading text-center">实时数据测试~~~</h3>
+                            <h3 class="form-signin-heading text-center">实时数据测试</h3>
 
+
+
+<!-- 
                             <div class="form-group">
                                 <label for="id_name" class="col-md-3 control-label">温度</label>
                                 <div id="temperature">温度测试</div>
                             </div>
-
-
 
                             <div class="form-group">
                                 <label for="id_description" class="col-md-3 control-label">湿度</label>
@@ -43,6 +44,10 @@
                                 <label for="id_description" class="col-md-3 control-label">光照</label>
                                 <div id="lux">光照</div>
                             </div>
+ -->
+                            <button type="button" class="btn btn-info" id="temperature">温度</button>
+                            <button type="button" class="btn btn-info" id="humidity">湿度</button>
+                            <button type="button" class="btn btn-info" id="lux">光照</button>
 
 <!--                             
                             <a class="btn btn-large btn-success" id="fire" >Send Email</a>
@@ -50,25 +55,237 @@
  -->
 
 
+                             <script type="text/javascript">
 
-                            <table class="highchart" data-graph-container-before="1" data-graph-type="column">
-                              <thead>
-                                  <tr>
-                                      <th>Month</th>
-                                      <th>Sales</th>
-                                  </tr>
-                               </thead>
-                               <tbody>
-                                  <tr>
-                                      <td>January</td>
-                                      <td>8000</td>
-                                  </tr>
-                                  <tr>
-                                      <td>February</td>
-                                      <td>12000</td>
-                                  </tr>
-                              </tbody>
-                            </table>
+                                $('#temperature').on('click', function (e) {
+                                    $("#myModal_temperature").modal(); 
+                                    //$('table.highchart').highchartTable();
+                                })
+
+
+                                $('#humidity').on('click', function (e) {
+                                    $("#myModal_humidity").modal(); 
+                                    //$('table.highchart').highchartTable();
+                                })
+
+                                $('#lux').on('click', function (e) {
+                                    $("#myModal_lux").modal(); 
+                                    //$('table.highchart').highchartTable();
+                                })
+
+                             </script>
+
+
+
+
+
+
+
+                            <div class="modal fade" id="myModal_temperature" tabindex="-1" role="dialog" 
+                               aria-labelledby="myModalLabel" aria-hidden="true">
+                               <div class="modal-dialog">
+                                  <div class="modal-content">
+                                     <div class="modal-header">
+                                        <button type="button" class="close" 
+                                           data-dismiss="modal" aria-hidden="true">
+                                              &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                           温度历史数据
+                                        </h4>
+                                     </div>
+                                     <div class="modal-body">
+                                            <table class="highchart temperature" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                                <caption>温度历史数据</caption>
+                                                <thead>
+                                                    <tr>                                  
+                                                        <th>时间</th>
+                                                        <th>温度</th>
+                                                    </tr>
+                                                 </thead>
+                                                 <tbody>
+
+                                                    {% for item in latest_data %}
+                                                        <tr>
+                                                            <td>{{item.record_date}}</td>
+                                                            <td>{{item.temperature}}</td>
+                                                        </tr>
+
+                                                    {% endfor %}
+                                                
+                                                </tbody>
+                                            </table>
+                                     </div>
+
+
+                                     <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" 
+                                           data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" class="btn btn-primary" id="tijiao_temperature" >
+                                           历史数据
+                                        </button>
+                                     </div>
+
+                                     <script type="text/javascript">
+
+                                        $('#tijiao_temperature').on('click', function (e) {
+                                            $('table.highchart.temperature').highchartTable();
+                                            //$('tijiao').prop('disabled', true);
+                                        })
+
+                                     </script>
+
+                                  </div>
+                            </div>
+                            </div>
+
+
+
+
+
+
+
+                            <div class="modal fade" id="myModal_humidity" tabindex="-1" role="dialog" 
+                               aria-labelledby="myModalLabel" aria-hidden="true">
+                               <div class="modal-dialog">
+                                  <div class="modal-content">
+                                     <div class="modal-header">
+                                        <button type="button" class="close" 
+                                           data-dismiss="modal" aria-hidden="true">
+                                              &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                           湿度历史数据
+                                        </h4>
+                                     </div>
+                                     <div class="modal-body">
+                                            <table class="highchart humidity" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                                <caption>湿度历史数据</caption>
+                                                <thead>
+                                                    <tr>                                  
+                                                        <th>时间</th>
+                                                        <th>湿度</th>
+                                                    </tr>
+                                                 </thead>
+                                                 <tbody>
+
+                                                    {% for item in latest_data %}
+                                                        <tr>
+                                                            <td>{{item.record_date}}</td>
+                                                            <td>{{item.humidity}}</td>
+                                                        </tr>
+
+                                                    {% endfor %}
+                                                
+                                                </tbody>
+                                            </table>
+                                     </div>
+
+
+                                     <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" 
+                                           data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" class="btn btn-primary" id="tijiao_humidity" >
+                                           历史数据
+                                        </button>
+                                     </div>
+
+                                     <script type="text/javascript">
+
+                                        $('#tijiao_humidity').on('click', function (e) {
+                                            $('table.highchart.humidity').highchartTable();
+                                            //$('tijiao').prop('disabled', true);
+                                        })
+
+                                     </script>
+
+                                  </div>
+                            </div>
+                            </div>
+
+
+
+
+
+                            <div class="modal fade" id="myModal_lux" tabindex="-1" role="dialog" 
+                               aria-labelledby="myModalLabel" aria-hidden="true">
+                               <div class="modal-dialog">
+                                  <div class="modal-content">
+                                     <div class="modal-header">
+                                        <button type="button" class="close" 
+                                           data-dismiss="modal" aria-hidden="true">
+                                              &times;
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                           光照历史数据
+                                        </h4>
+                                     </div>
+                                     <div class="modal-body">
+                                            <table class="highchart lux" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                                <caption>光照历史数据</caption>
+                                                
+                                                <thead>
+                                                    <tr>                                  
+                                                        <th>Month</th>
+                                                        <th>Sales</th>
+                                                        <th>Benefits</th>
+                                                    </tr>
+                                                 </thead>
+                                                 <tbody>
+                                                    <tr>
+                                                        <td>January</td>
+                                                        <td>8000</td>
+                                                        <td>2000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>February</td>
+                                                        <td>12000</td>
+                                                        <td>3000</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>March</td>
+                                                        <td>18000</td>
+                                                        <td>8000</td>
+                                                    </tr>
+                                                </tbody>
+
+
+                                            </table>
+                                     </div>
+
+
+                                     <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" 
+                                           data-dismiss="modal">关闭
+                                        </button>
+                                        <button type="button" class="btn btn-primary" id="tijiao_lux" >
+                                           历史数据
+                                        </button>
+                                     </div>
+
+                                     <script type="text/javascript">
+
+                                        $('#tijiao_lux').on('click', function (e) {
+                                            $('table.highchart.lux').highchartTable();
+                                        })
+
+                                     </script>
+
+                                  </div>
+                            </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -90,11 +307,36 @@
                                 // })
 
 
+
+                                function sleep(milliseconds) {
+                                  var start = new Date().getTime();
+                                  for (var i = 0; i < 1e7; i++) {
+                                    if ((new Date().getTime() - start) > milliseconds){
+                                      break;
+                                    }
+                                  }
+                                }
+
+
                                 function startrequest() {
                                     $.getJSON('/json_test', function(data) {
                                         $.each(data, function(index, element) {
-                                                //console.log(index+" : "+ element);   
-                                                $("#"+index).text(element);                                                
+                                                //console.log(index+" : "+ element);
+                                                var item;
+                                                if(index=='temperature')
+                                                {
+                                                    item="温度"
+                                                }
+                                                else if(index=="humidity")
+                                                {
+                                                    item="湿度"
+                                                }
+                                                else
+                                                {
+                                                    item="光照"
+                                                }
+
+                                                $("#"+index).text(item+" "+element);                                                
                                         });
                                     });
                                 }

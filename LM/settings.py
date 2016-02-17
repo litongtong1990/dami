@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'management.apps.ManagementConfig',
+    'django_crontab'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -96,6 +97,20 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+CRONJOBS = [
+    ('*/1 * * * *', 'management.apps.my_scheduled_job'),
+    ('*/1 * * * *', 'management.views.my_scheduled_job_1')
+
+
+]
+
+
+
+
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
