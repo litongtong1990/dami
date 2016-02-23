@@ -24,3 +24,7 @@
 
 
 
+sqlite3 db.sqlite3
+sqlite>.header on
+sqlite>.mode column
+sqlite> select * from management_environment;

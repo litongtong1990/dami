@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import MyUser, Book, Img,Environment
+from models import MyUser, Book, Img,Environment,Environment_Daily,Environment_Weekly,Environment_Monthly
 from django.core.urlresolvers import reverse, reverse_lazy
 from utils import permission_check
 import qrcode
@@ -12,6 +12,7 @@ from cStringIO import StringIO
 from django.http import HttpResponse
 import json
 from django.utils import timezone
+import datetime
 
 
 
@@ -82,6 +83,82 @@ def my_scheduled_job():
     E = Environment(temperature=temperature, humidity=humidity,light=lux,record_date=timezone.now())
     E.save()
     print "save the sensor data to database successfully!"
+
+
+
+
+
+def crontab_daily(request):
+
+    #Environment.objects.filter(record_date=timezone.now())
+    environment_all=Environment.objects.all()
+    record_date_list=[]
+    for item in environment_all:
+        record_date=[item.record_date.year,item.record_date.month,item.record_date.day]
+        if record_date not in record_date_list:
+            record_date_list.append(record_date)
+    
+    for record_date in record_date_list:
+        year=record_date[0]
+        month=record_date[1]
+        day=record_date[2]
+        print year,month,day        
+
+        result=Environment.objects.filter(record_date__contains=datetime.date(year, month, day))
+        # Calculate the average value of temperature,humidity and light
+        temperature_list=[item.temperature for item in result]
+        temperature_average=sum(temperature_list)/len(temperature_list)
+        
+        humidity_list=[item.humidity for item in result]
+        humidity_average=sum(humidity_list)/len(humidity_list)
+
+        light_list=[item.light for item in result]
+        light_average=sum(light_list)/len(light_list)
+
+        E = Environment_Daily(temperature=temperature_average, humidity=humidity_average,light=light_average,record_date=datetime.date(year, month, day))
+        E.save()
+        print "Calculate the history data of %s-%s-%s successfully!"%(str(year),str(month),str(day))
+
+
+    #print timezone.now()
+
+    return HttpResponse("Get the data successfully")    
+
+
+
+
+
+
+def crontab_daily_incremental():
+
+    
+    year=timezone.now().year
+    month=timezone.now().month
+    day=timezone.now().day
+
+    result=Environment.objects.filter(record_date__contains=datetime.date(year, month, day))
+    # Calculate the average value of temperature,humidity and light
+    temperature_list=[item.temperature for item in result]
+    temperature_average=sum(temperature_list)/len(temperature_list)
+    
+    humidity_list=[item.humidity for item in result]
+    humidity_average=sum(humidity_list)/len(humidity_list)
+
+    light_list=[item.light for item in result]
+    light_average=sum(light_list)/len(light_list)
+
+    E = Environment_Daily(temperature=temperature_average, humidity=humidity_average,light=light_average,record_date=datetime.date(year, month, day))
+    E.save()
+    
+
+    print "Calculate the history data of %s-%s-%s successfully!"%(str(year),str(month),str(day))
+
+    #return HttpResponse("Calculate the last date successfully")  
+
+
+
+
+
 
 
 
