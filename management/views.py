@@ -473,7 +473,7 @@ def realtime_info(request):
     state = None
     name = None
 
-    latest_data=Environment.objects.order_by('-record_date')[0:3]
+    latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
 
 
 

@@ -8,12 +8,8 @@
 <script type="text/javascript">
     $(document).ready(function(){
         setInterval("startrequest()",1000); 
-        //$('table.highchart').highchartTable();
-
-
         }); 
 </script>
-
 
 
     <div class="container">
@@ -29,56 +25,28 @@
 
 
 
-<!-- 
-                            <div class="form-group">
-                                <label for="id_name" class="col-md-3 control-label">温度</label>
-                                <div id="temperature">温度测试</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="id_description" class="col-md-3 control-label">湿度</label>
-                                <div id="humidity">湿度</div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="id_description" class="col-md-3 control-label">光照</label>
-                                <div id="lux">光照</div>
-                            </div>
- -->
                             <button type="button" class="btn btn-info" id="temperature">温度</button>
                             <button type="button" class="btn btn-info" id="humidity">湿度</button>
                             <button type="button" class="btn btn-info" id="lux">光照</button>
 
-<!--                             
-                            <a class="btn btn-large btn-success" id="fire" >Send Email</a>
-
- -->
 
 
                              <script type="text/javascript">
 
                                 $('#temperature').on('click', function (e) {
                                     $("#myModal_temperature").modal(); 
-                                    //$('table.highchart').highchartTable();
                                 })
 
 
                                 $('#humidity').on('click', function (e) {
                                     $("#myModal_humidity").modal(); 
-                                    //$('table.highchart').highchartTable();
                                 })
 
                                 $('#lux').on('click', function (e) {
                                     $("#myModal_lux").modal(); 
-                                    //$('table.highchart').highchartTable();
                                 })
 
                              </script>
-
-
-
-
-
 
 
                             <div class="modal fade" id="myModal_temperature" tabindex="-1" role="dialog" 
@@ -127,24 +95,10 @@
                                         </button>
                                      </div>
 
-                                     <script type="text/javascript">
-
-                                        $('#tijiao_temperature').on('click', function (e) {
-                                            $('table.highchart.temperature').highchartTable();
-                                            //$('tijiao').prop('disabled', true);
-                                        })
-
-                                     </script>
 
                                   </div>
                             </div>
                             </div>
-
-
-
-
-
-
 
                             <div class="modal fade" id="myModal_humidity" tabindex="-1" role="dialog" 
                                aria-labelledby="myModalLabel" aria-hidden="true">
@@ -160,7 +114,7 @@
                                         </h4>
                                      </div>
                                      <div class="modal-body">
-                                            <table class="highchart humidity" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                            <table class="highchart humidity" data-graph-container-before="1" data-graph-type="line" style="display:none">
                                                 <caption>湿度历史数据</caption>
                                                 <thead>
                                                     <tr>                                  
@@ -192,21 +146,10 @@
                                         </button>
                                      </div>
 
-                                     <script type="text/javascript">
-
-                                        $('#tijiao_humidity').on('click', function (e) {
-                                            $('table.highchart.humidity').highchartTable();
-                                            //$('tijiao').prop('disabled', true);
-                                        })
-
-                                     </script>
 
                                   </div>
                             </div>
                             </div>
-
-
-
 
 
                             <div class="modal fade" id="myModal_lux" tabindex="-1" role="dialog" 
@@ -228,31 +171,27 @@
                                                 
                                                 <thead>
                                                     <tr>                                  
-                                                        <th>Month</th>
-                                                        <th>Sales</th>
-                                                        <th>Benefits</th>
+                                                        <th>时间</th>
+                                                        <th>光照</th>
                                                     </tr>
                                                  </thead>
                                                  <tbody>
-                                                    <tr>
-                                                        <td>January</td>
-                                                        <td>8000</td>
-                                                        <td>2000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>February</td>
-                                                        <td>12000</td>
-                                                        <td>3000</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>March</td>
-                                                        <td>18000</td>
-                                                        <td>8000</td>
-                                                    </tr>
+
+                                                    {% for item in latest_data %}
+                                                        <tr>
+                                                            <td>{{item.record_date}}</td>
+                                                            <td>{{item.light}}</td>
+                                                        </tr>
+
+                                                    {% endfor %}
+                                                
                                                 </tbody>
 
 
                                             </table>
+
+
+
                                      </div>
 
 
@@ -265,13 +204,7 @@
                                         </button>
                                      </div>
 
-                                     <script type="text/javascript">
 
-                                        $('#tijiao_lux').on('click', function (e) {
-                                            $('table.highchart.lux').highchartTable();
-                                        })
-
-                                     </script>
 
                                   </div>
                             </div>
@@ -279,13 +212,44 @@
 
 
 
+                            <script type="text/javascript">
+
+                                        var temperature_count=1;
+                                        var humidity_count=1;
+                                        var lux_count=1;
+
+                                        $('#tijiao_temperature').on('click', function (e) {
+                                        if(temperature_count==1)
+                                        {
+                                            $('table.highchart.temperature').highchartTable();
+                                            temperature_count++;                                            
+                                        }
+
+                                        })
 
 
+                                        $('#tijiao_humidity').on('click', function (e) {
+                                            if(humidity_count==1)
+                                            {
+                                                $('table.highchart.humidity').highchartTable();
+                                                humidity_count++;                                               
+                                            }
+
+                                        })
 
 
+                                        $('#tijiao_lux').on('click', function (e) {
+
+                                            if (lux_count==1)
+                                            {
+                                                 $('table.highchart.lux').highchartTable();   
+                                                 lux_count++;                                            
+                                            }
+
+                                        })
 
 
-
+                            </script>
 
 
 
@@ -305,7 +269,6 @@
                                 //         });
                                 //     });
                                 // })
-
 
 
                                 function sleep(milliseconds) {
