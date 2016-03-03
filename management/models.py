@@ -55,14 +55,16 @@ class Environment(models.Model):
 
 
 class Environment_Daily(models.Model):
+    
     temperature=models.FloatField(null=True, blank=True, default=None)
+    temperature_low=models.FloatField(null=True, blank=True, default=None)    
+    temperature_high=models.FloatField(null=True, blank=True, default=None)    
     humidity=models.FloatField(null=True, blank=True, default=None)
-    # wind_speed=models.FloatField(null=True, blank=True, default=None)
-    # wind_direction=models.FloatField(null=True, blank=True, default=None)
+    humidity_low=models.FloatField(null=True, blank=True, default=None)
+    humidity_high=models.FloatField(null=True, blank=True, default=None)
     light=models.FloatField(null=True, blank=True, default=None)
-    # soid_temperature=models.FloatField(null=True, blank=True, default=None)
-    # soid_humidity=models.FloatField(null=True, blank=True, default=None)
-    # product_name = models.CharField(max_length=200,default=None)
+    light_low=models.FloatField(null=True, blank=True, default=None)
+    light_high=models.FloatField(null=True, blank=True, default=None)        
     record_date = models.DateTimeField(default=None)
 
 

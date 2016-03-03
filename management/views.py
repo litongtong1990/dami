@@ -108,14 +108,25 @@ def crontab_daily(request):
         # Calculate the average value of temperature,humidity and light
         temperature_list=[item.temperature for item in result]
         temperature_average=sum(temperature_list)/len(temperature_list)
+        temperature_low=min(temperature_list)
+        temperature_high=max(temperature_list)
+
         
         humidity_list=[item.humidity for item in result]
         humidity_average=sum(humidity_list)/len(humidity_list)
+        humidity_low=min(humidity_list)
+        humidity_high=max(humidity_list)
 
         light_list=[item.light for item in result]
         light_average=sum(light_list)/len(light_list)
+        light_low=min(light_list)
+        light_high=max(light_list)
 
-        E = Environment_Daily(temperature=temperature_average, humidity=humidity_average,light=light_average,record_date=datetime.date(year, month, day))
+
+        E = Environment_Daily(temperature=temperature_average,temperature_low=temperature_low,temperature_high=temperature_high,
+                              humidity=humidity_average,humidity_low=humidity_low,humidity_high=humidity_high,
+                              light=light_average,light_high=light_high,light_low=light_low,
+                              record_date=datetime.date(year, month, day))
         E.save()
         print "Calculate the history data of %s-%s-%s successfully!"%(str(year),str(month),str(day))
 

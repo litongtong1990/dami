@@ -63,12 +63,14 @@
                                         </h4>
                                      </div>
                                      <div class="modal-body">
-                                            <table class="highchart temperature" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                            <table class="highchart temperature" data-graph-container-before="1" data-graph-type="line" style="display:none">
                                                 <caption>温度历史数据</caption>
                                                 <thead>
                                                     <tr>                                  
                                                         <th>时间</th>
-                                                        <th>温度</th>
+                                                        <th>平均温度</th>
+                                                        <th>最高温度</th> 
+                                                        <th>最低温度</th>                                                        
                                                     </tr>
                                                  </thead>
                                                  <tbody>
@@ -77,6 +79,8 @@
                                                         <tr>
                                                             <td>{{item.record_date}}</td>
                                                             <td>{{item.temperature}}</td>
+                                                            <td>{{item.temperature_high}}</td>
+                                                            <td>{{item.temperature_low}}</td>
                                                         </tr>
 
                                                     {% endfor %}
@@ -119,7 +123,9 @@
                                                 <thead>
                                                     <tr>                                  
                                                         <th>时间</th>
-                                                        <th>湿度</th>
+                                                        <th>平均湿度</th>
+                                                        <th>最高湿度</th>
+                                                        <th>最低湿度</th>
                                                     </tr>
                                                  </thead>
                                                  <tbody>
@@ -128,6 +134,8 @@
                                                         <tr>
                                                             <td>{{item.record_date}}</td>
                                                             <td>{{item.humidity}}</td>
+                                                            <td>{{item.humidity_high}}</td>
+                                                            <td>{{item.humidity_low}}</td>
                                                         </tr>
 
                                                     {% endfor %}
@@ -166,13 +174,15 @@
                                         </h4>
                                      </div>
                                      <div class="modal-body">
-                                            <table class="highchart lux" data-graph-container-before="1" data-graph-type="column" style="display:none">
+                                            <table class="highchart lux" data-graph-container-before="1" data-graph-type="line" style="display:none">
                                                 <caption>光照历史数据</caption>
                                                 
                                                 <thead>
                                                     <tr>                                  
                                                         <th>时间</th>
-                                                        <th>光照</th>
+                                                        <th>平均光照</th>
+                                                        <th>最高光照</th>
+                                                        <th>最低光照</th>
                                                     </tr>
                                                  </thead>
                                                  <tbody>
@@ -181,6 +191,8 @@
                                                         <tr>
                                                             <td>{{item.record_date}}</td>
                                                             <td>{{item.light}}</td>
+                                                            <td>{{item.light_high}}</td>
+                                                            <td>{{item.light_low}}</td>
                                                         </tr>
 
                                                     {% endfor %}
