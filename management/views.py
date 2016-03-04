@@ -186,6 +186,17 @@ def index(request):
 
 
 
+
+def index_new(request):
+    user = request.user if request.user.is_authenticated() else None
+    content = {
+        'active_menu': 'homepage',
+        'user': user,
+    }
+    return render(request, 'management/index_new.html', content)
+
+
+
 # this is for add the temperature_humidity and lux
 def json_test(request):
 

@@ -1,0 +1,358 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="utf-8">
+		<title>Connected Plant | 主页</title>
+		<meta name="description" content="Connected Plant">
+		<meta name="author" content="htmlcoder.me">
+
+		<!-- Mobile Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- Web Fonts -->
+		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+
+		<!-- Bootstrap core CSS -->
+		<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+
+		<!-- Font Awesome CSS -->
+		<link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
+
+		<!-- Plugins -->
+		<link href="{% static 'plugins/flexslider/flexslider.css' %}" rel="stylesheet">
+		<link href="{% static 'css/animations.css" rel="stylesheet' %}">
+		<link href="{% static 'plugins/owl-carousel/owl.carousel.css' %}" rel="stylesheet">
+
+		<!-- iVega core CSS file -->
+		<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+		<!-- Color Scheme (In order to change the color scheme, replace the blue.css with the color scheme that you prefer)-->
+		<link href="{% static 'css/skins/blue.css' %}" rel="stylesheet">
+
+		<!-- Custom css --> 
+		<link href="{% static 'css/custom.css' %}" rel="stylesheet">
+	</head>
+
+	<body class="front preload">
+
+		<!-- page wrapper start (Add "boxed" class to page-wrapper in order to enable boxed layout mode) -->
+		<div class="page-wrapper">
+		
+			<!-- scrollToTop start -->
+			<!--div class="scrollToTop"><i class="fa fa-angle-up"></i></div-->
+			<!-- scrollToTop end -->
+
+			<!-- preheader start -->
+			<div class="preheader">
+				<div class="container">
+					<div class="preheader-content">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="space hidden" id="preheader-contactSuccess">
+									<strong>Success!</strong> Your message has been sent to us.
+								</div>
+								<div class="space hidden" id="preheader-contactError">
+									<strong>Error!</strong> There was an error sending your message.
+								</div>
+								<h2>Drop us a line</h2>
+								<div class="row">
+									<form role="form" id="preheader-contact-form">
+										<div class="col-md-6">
+											<div class="form-group name">
+												<label for="name3">Name*</label>
+												<input type="text" class="form-control" id="name3" placeholder="" name="name3">
+											</div>
+											<div class="form-group email">
+												<label for="email3">Email*</label>
+												<input type="email" class="form-control" id="email3" placeholder="" name="email3">
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="form-group message">
+												<label for="message3">Message*</label>
+												<textarea class="form-control" rows="5" id="message3" placeholder="" name="message3"></textarea>
+											</div>
+										</div>
+										<div class="col-md-12">
+											<input type="submit" value="Submit" class="btn btn-default">
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="trigger">
+					<a href="javascript:showPreHeader()" class="triangle"><i class="fa fa-plus"></i></a>
+				</div>
+			</div>
+			<!-- preheader end -->
+
+
+			<!-- header start -->
+			<header class="header text-center">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<!--div class="logo">
+								<a href="index.html"><img id="logo" src="images/logo_blue.png" alt="iVega"></a>
+							</div-->
+							<div class="site-slogan" style="color:black; font-size: 300%; font-weight:bold;">
+								Connected Plant
+							</div>
+						</div>
+					</div>
+				</div>
+			</header>
+			<!-- header end -->
+
+			<!-- main-navigation start (remove fixed class from main-navigation in order to disable fixed navigation mode)-->
+			<div class="main-navigation fixed">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+
+							<!-- navbar start -->
+							<nav class="navbar navbar-default" role="navigation">
+
+								<!-- Toggle get grouped for better mobile display -->
+								<div class="navbar-header">
+									<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+										<span class="sr-only">Toggle navigation</span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+										<span class="icon-bar"></span>
+									</button>
+								</div>
+
+								<!-- Collect the nav links, forms, and other content for toggling -->
+								<div class="collapse navbar-collapse" id="navbar-collapse-1">
+									<ul class="nav navbar-nav navbar-main-menu">
+										<li>
+											<a href="index.html">主页</a>
+										</li>
+										<li class="dropdown">
+											<a href="portfolio-full.html" class="dropdown-toggle" data-toggle="dropdown">监控中心</a>
+											<ul class="dropdown-menu">
+												<li><a href="portfolio-full.html">总览</a></li>
+												<li><a href="portfolio-item.html">历史数据</a></li>
+												<li><a href="portfolio-item-2.html">智能控制</a></li>
+											</ul>
+										</li>
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown">产品溯源</a>
+											<ul class="dropdown-menu">
+												<li><a href="page-contact.html">新建溯源档案</a></li>
+												<li><a href="suyuan_list.html">溯源档案维护</a></li>
+												<li><a href="page-services.html">溯源二维码</a></li>
+											</ul>
+										</li>
+										<li class="dropdown">
+											<a href="blog.html" class="dropdown-toggle" data-toggle="dropdown">系统管理</a>
+											<ul class="dropdown-menu">
+												<li><a href="blog.html">用户权限</a></li>
+												<li><a href="blog-2.html">运行状态</a></li>
+											</ul>
+										</li>
+										<li class="dropdown">
+											<a href="page-about.html" class="dropdown-toggle" data-toggle="dropdown">关于</a>
+											<ul class="dropdown-menu">
+												<li><a href="page-about.html">关于我们</a></li>
+												<li><a href="page-team.html">我们的团队</a></li>
+											</ul>
+										</li>
+									</ul>
+									<ul class="nav navbar-nav navbar-right navbar-symbols">
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
+											<ul class="dropdown-menu animated fadeInDownSmall">
+												<li>
+													<form role="search">
+														<div class="form-group search">
+															<input type="text" class="form-control" placeholder="Search">
+														</div>
+													</form>
+												</li>
+											</ul>
+											<div class="vertical-div hidden-xs"></div>
+										</li>
+										<li class="dropdown">
+											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lock"></i></a>
+											<ul class="dropdown-menu animated fadeInDownSmall">
+												<li>
+													<form class="login-form">
+														<div class="form-group name">
+															<input type="text" class="form-control" placeholder="用户名">
+														</div>
+														<div class="form-group password">
+															<input type="text" class="form-control" placeholder="密码">
+														</div>
+														<button type="submit" class="btn btn-gray">登录</button>
+														<span>or</span>
+														<button type="submit" class="btn btn-gray btn-default">注册</button>
+														<ul>
+															<li><a href="#">忘记密码</a></li>
+														</ul>
+													</form>
+												</li>
+											</ul>
+										</li>
+									</ul>
+								</div>
+							</nav>
+							<!-- navbar end -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- main-navigation end -->
+
+
+			<!-- main start -->
+			<section class="main">
+
+
+				<!-- main content wrapper start -->
+				<div class="main-content-wrapper">
+					<div class="container">
+						<div class="row">
+
+							<!-- main content start -->
+							<section class="main-content col-md-12">
+								<div>
+									<p></p>
+								</div>
+								<div class="row">
+									<div class="img-boxes isotope-container">
+										<div class="col-sm-6 col-md-4 isotope-item web-design">
+											<div class="img-box">
+												<a href="portfolio-item.html" class="mask-wrapper">
+													<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
+													<div class="mask">
+														<span>监控中心</span>
+														<span class="triangle"><i class="fa fa-link"></i></span>
+													</div>
+												</a>
+												<h3>监控中心</h3>
+												<div class="separator-2"></div>
+												<p>提供实时监控功能。。。。。。</p>
+												<a class="btn btn-default" href="portfolio-item.html">进入</a>
+											</div> 
+										</div>
+										<div class="col-sm-6 col-md-4 isotope-item app-development">
+											<div class="img-box">
+												<a href="portfolio-item.html" class="mask-wrapper">
+													<img src="{% static 'images/portfolio-2.jpg' %}" alt="">
+													<div class="mask">
+														<span>产品溯源</span>
+														<span class="triangle"><i class="fa fa-link"></i></span>
+													</div>
+												</a>
+												<h3>产品溯源</h3>
+												<div class="separator-2"></div>
+												<p>具体的产品溯源管理中心。。。。。。</p>
+												<a class="btn btn-default" href="portfolio-item.html">进入</a>
+											</div> 
+										</div>
+										<div class="col-sm-6 col-md-4 isotope-item web-design">
+											<div class="img-box">
+												<a href="portfolio-item.html" class="mask-wrapper">
+													<img src="{% static 'images/portfolio-3.jpg' %}" alt="">
+													<div class="mask">
+														<span>系统管理</span>
+														<span class="triangle"><i class="fa fa-link"></i></span>
+													</div>
+												</a>
+												<h3>系统管理</h3>
+												<div class="separator-2"></div>
+												<p>系统管理中心</p>
+												<a class="btn btn-default" href="portfolio-item.html">进入</a>
+											</div>  
+										</div>
+									</div>
+								</div>
+							</section>
+							<!-- main content end -->
+							
+						</div>
+					</div>
+				</div>
+				<!-- main content wrapper end -->
+
+			</section>
+			<!-- main end -->
+
+
+
+			<!-- footer start -->
+			<footer>
+
+				<!-- .footer start -->
+				<div class="footer" style="background-color:white;">
+				<!-- .subfooter start -->
+				<!--div class="subfooter" style="background-color:grey;"-->
+				<div class="header text-center">
+					<div class="container" >
+						<div class="row">
+							<div class="col-md-4" style="color:black">
+								<p>Copyright © 2016 QZ-IOT. All Rights Reserved</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- /.subfooter end -->
+				</div>
+
+			</footer>
+			<!-- footer end -->
+		</div>
+		<!-- page wrapper end -->
+
+		<!-- JavaScript files placed at the end of the document so the pages load faster
+		================================================== -->
+		<!-- Jquery and Bootstap core js files -->
+		<script type="text/javascript" src="{% static 'plugins/jquery.min.js' %}"></script>
+		
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+
+
+<!-- 
+    	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+ -->
+		<!-- Modernizr javascript -->
+		<script type="text/javascript" src="{% static 'plugins/modernizr.js' %}"></script>
+
+		<!-- Flexslider javascript -->
+		<script type="text/javascript" src="{% static 'plugins/flexslider/jquery.flexslider.js' %}"></script>
+
+		<!-- Owl carousel javascript -->
+		<script type="text/javascript" src="{% static 'plugins/owl-carousel/owl.carousel.js' %}"></script>
+
+		<!-- Magnific Popup javascript -->
+		<script type="text/javascript" src="{% static 'plugins/magnific-popup/jquery.magnific-popup.min.js' %}"></script>
+
+		<!-- Appear javascript -->
+		<script type="text/javascript" src="{% static 'plugins/jquery.appear.js' %}"></script>
+
+		<!-- Count To javascript -->
+		<script type="text/javascript" src="{% static 'plugins/jquery.countTo.js' %}"></script>
+
+		<!-- Flowtype javascript -->
+		<script type="text/javascript" src="{% static 'plugins/flowtype.js' %}"></script>   
+
+		<!-- Parallax javascript -->
+		<script src="{% static 'plugins/jquery.parallax-1.1.3.js' %}"></script>
+
+		<!-- Contact form -->
+		<script src="{% static 'plugins/jquery.validate.js' %}"></script>
+
+		<!-- Initialization of Plugins -->
+		<script type="text/javascript" src="{% static 'js/template.js' %}"></script>
+
+	</body>
+</html>
