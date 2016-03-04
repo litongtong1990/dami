@@ -3,7 +3,7 @@
 <html lang="zh">
 	<head>
 		<meta charset="utf-8">
-		<title>Connected Plant | 主页</title>
+    	<title>{% block title %}{% endblock %}</title>		
 		<meta name="description" content="Connected Plant">
 		<meta name="author" content="htmlcoder.me">
 
@@ -14,6 +14,11 @@
 		<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900,300italic,400italic,700italic' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700,300&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=PT+Serif' rel='stylesheet' type='text/css'>
+        
+        <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="{% static 'js/jquery.highchartTable.js' %}" type="text/javascript"></script>
+
 
 		<!-- Bootstrap core CSS -->
 		<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
@@ -34,6 +39,11 @@
 
 		<!-- Custom css --> 
 		<link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+
+    	<script type="text/javascript" src="{% static 'ckplayer/ckplayer.js'%}"></script>
+
+
 	</head>
 
 	<body class="front preload">
@@ -132,22 +142,22 @@
 								<div class="collapse navbar-collapse" id="navbar-collapse-1">
 									<ul class="nav navbar-nav navbar-main-menu">
 										<li>
-											<a href="index.html">主页</a>
+											<a href="{% url 'index_test' %}">主页</a>
 										</li>
 										<li class="dropdown">
-											<a href="portfolio-full.html" class="dropdown-toggle" data-toggle="dropdown">监控中心</a>
+											<a href="{% url 'realtime_info' %}" class="dropdown-toggle" data-toggle="dropdown">监控中心</a>
 											<ul class="dropdown-menu">
-												<li><a href="portfolio-full.html">总览</a></li>
-												<li><a href="portfolio-item.html">历史数据</a></li>
-												<li><a href="portfolio-item-2.html">智能控制</a></li>
+												<li><a href="{% url 'video' %}">视频监控</a></li>
+												<li><a href="{% url 'realtime_info' %}">历史数据</a></li>
+												<li><a>智能控制</a></li>
 											</ul>
 										</li>
 										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown">产品溯源</a>
+											<a href="{% url 'suyuan' %}" class="dropdown-toggle" data-toggle="dropdown">产品溯源</a>
 											<ul class="dropdown-menu">
-												<li><a href="page-contact.html">新建溯源档案</a></li>
-												<li><a href="suyuan_list.html">溯源档案维护</a></li>
-												<li><a href="page-services.html">溯源二维码</a></li>
+												<li><a>新建溯源档案</a></li>
+												<li><a>溯源档案维护</a></li>
+												<li><a>溯源二维码</a></li>
 											</ul>
 										</li>
 										<li class="dropdown">
@@ -211,82 +221,7 @@
 			</div>
 			<!-- main-navigation end -->
 
-
-			<!-- main start -->
-			<section class="main">
-
-
-				<!-- main content wrapper start -->
-				<div class="main-content-wrapper">
-					<div class="container">
-						<div class="row">
-
-							<!-- main content start -->
-							<section class="main-content col-md-12">
-								<div>
-									<p></p>
-								</div>
-								<div class="row">
-									<div class="img-boxes isotope-container">
-										<div class="col-sm-6 col-md-4 isotope-item web-design">
-											<div class="img-box">
-												<a href="portfolio-item.html" class="mask-wrapper">
-													<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
-													<div class="mask">
-														<span>监控中心</span>
-														<span class="triangle"><i class="fa fa-link"></i></span>
-													</div>
-												</a>
-												<h3>监控中心</h3>
-												<div class="separator-2"></div>
-												<p>提供实时监控功能。。。。。。</p>
-												<a class="btn btn-default" href="portfolio-item.html">进入</a>
-											</div> 
-										</div>
-										<div class="col-sm-6 col-md-4 isotope-item app-development">
-											<div class="img-box">
-												<a href="portfolio-item.html" class="mask-wrapper">
-													<img src="{% static 'images/portfolio-2.jpg' %}" alt="">
-													<div class="mask">
-														<span>产品溯源</span>
-														<span class="triangle"><i class="fa fa-link"></i></span>
-													</div>
-												</a>
-												<h3>产品溯源</h3>
-												<div class="separator-2"></div>
-												<p>具体的产品溯源管理中心。。。。。。</p>
-												<a class="btn btn-default" href="portfolio-item.html">进入</a>
-											</div> 
-										</div>
-										<div class="col-sm-6 col-md-4 isotope-item web-design">
-											<div class="img-box">
-												<a href="portfolio-item.html" class="mask-wrapper">
-													<img src="{% static 'images/portfolio-3.jpg' %}" alt="">
-													<div class="mask">
-														<span>系统管理</span>
-														<span class="triangle"><i class="fa fa-link"></i></span>
-													</div>
-												</a>
-												<h3>系统管理</h3>
-												<div class="separator-2"></div>
-												<p>系统管理中心</p>
-												<a class="btn btn-default" href="portfolio-item.html">进入</a>
-											</div>  
-										</div>
-									</div>
-								</div>
-							</section>
-							<!-- main content end -->
-							
-						</div>
-					</div>
-				</div>
-				<!-- main content wrapper end -->
-
-			</section>
-			<!-- main end -->
-
-
+			{% block content %}{% endblock %}
 
 			<!-- footer start -->
 			<footer>
@@ -315,15 +250,10 @@
 		<!-- JavaScript files placed at the end of the document so the pages load faster
 		================================================== -->
 		<!-- Jquery and Bootstap core js files -->
-		<script type="text/javascript" src="{% static 'plugins/jquery.min.js' %}"></script>
+
 		
 		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
 
-
-<!-- 
-    	<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-
- -->
 		<!-- Modernizr javascript -->
 		<script type="text/javascript" src="{% static 'plugins/modernizr.js' %}"></script>
 

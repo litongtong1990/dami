@@ -170,30 +170,23 @@ def crontab_daily_incremental():
 
 
 
-
-
-
-
-
-
-def index(request):
+def index_test(request):
     user = request.user if request.user.is_authenticated() else None
     content = {
         'active_menu': 'homepage',
         'user': user,
     }
-    return render(request, 'management/index.html', content)
+    return render(request, 'management/index_test.html', content)
 
 
 
-
-def index_new(request):
+def suyuan(request):
     user = request.user if request.user.is_authenticated() else None
     content = {
         'active_menu': 'homepage',
         'user': user,
     }
-    return render(request, 'management/index_new.html', content)
+    return render(request, 'management/suyuan.html', content)
 
 
 

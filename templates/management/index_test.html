@@ -1,0 +1,82 @@
+{% extends "management/base_new.html" %}
+{% load staticfiles %}
+{% block title %}农业智能系统{% endblock %}
+
+{% block content %}
+
+			<!-- main start -->
+			<section class="main">
+
+
+				<!-- main content wrapper start -->
+				<div class="main-content-wrapper">
+					<div class="container">
+						<div class="row">
+
+							<!-- main content start -->
+							<section class="main-content col-md-12">
+								<div>
+									<p></p>
+								</div>
+								<div class="row">
+									<div class="img-boxes isotope-container">
+										<div class="col-sm-6 col-md-4 isotope-item web-design">
+											<div class="img-box">
+												<a href="{% url 'video' %}" class="mask-wrapper">
+													<img src="{% static 'images/portfolio-1.jpg' %}" alt="">
+													<div class="mask">
+														<span>监控中心</span>
+														<span class="triangle"><i class="fa fa-link"></i></span>
+													</div>
+												</a>
+												<h3>监控中心</h3>
+												<div class="separator-2"></div>
+												<p>提供实时监控功能。。。。。。</p>
+												<a class="btn btn-default" href="{% url 'video' %}">进入</a>
+											</div> 
+										</div>
+										<div class="col-sm-6 col-md-4 isotope-item app-development">
+											<div class="img-box">
+												<a href="{% url 'suyuan' %}" class="mask-wrapper">
+													<img src="{% static 'images/portfolio-2.jpg' %}" alt="">
+													<div class="mask">
+														<span>产品溯源</span>
+														<span class="triangle"><i class="fa fa-link"></i></span>
+													</div>
+												</a>
+												<h3>产品溯源</h3>
+												<div class="separator-2"></div>
+												<p>具体的产品溯源管理中心。。。。。。</p>
+												<a class="btn btn-default" href="{% url 'suyuan' %}">进入</a>
+											</div> 
+										</div>
+										<div class="col-sm-6 col-md-4 isotope-item web-design">
+											<div class="img-box">
+												<a href="portfolio-item.html" class="mask-wrapper">
+													<img src="{% static 'images/portfolio-3.jpg' %}" alt="">
+													<div class="mask">
+														<span>系统管理</span>
+														<span class="triangle"><i class="fa fa-link"></i></span>
+													</div>
+												</a>
+												<h3>系统管理</h3>
+												<div class="separator-2"></div>
+												<p>系统管理中心</p>
+												<a class="btn btn-default" href="portfolio-item.html">进入</a>
+											</div>  
+										</div>
+									</div>
+								</div>
+							</section>
+							<!-- main content end -->
+							
+						</div>
+					</div>
+				</div>
+				<!-- main content wrapper end -->
+
+			</section>
+			<!-- main end -->
+
+{% endblock %}
+
