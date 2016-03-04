@@ -171,6 +171,29 @@ def crontab_daily_incremental():
 
 
 def index_test(request):
+
+
+    state = None
+
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            return HttpResponseRedirect(reverse('index_test'))
+        else:
+            state = 'not_exist_or_password_error'
+
+            content = {
+                'active_menu': 'homepage',
+                'state': state,
+                'user': None
+            }
+
+            return render(request, 'management/login.html', content)
+
     user = request.user if request.user.is_authenticated() else None
     content = {
         'active_menu': 'homepage',
@@ -240,7 +263,7 @@ def json_test(request):
 
 def signup(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('homepage'))
+        return HttpResponseRedirect(reverse('index_test'))
     state = None
     if request.method == 'POST':
         password = request.POST.get('password', '')
@@ -270,7 +293,7 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('homepage'))
+        return HttpResponseRedirect(reverse('index_test'))
     state = None
     if request.method == 'POST':
         username = request.POST.get('username', '')
@@ -278,7 +301,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('homepage'))
+            return HttpResponseRedirect(reverse('index_test'))
         else:
             state = 'not_exist_or_password_error'
     content = {
@@ -291,7 +314,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('homepage'))
+    return HttpResponseRedirect(reverse('index_test'))
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -489,7 +512,6 @@ def realtime_info(request):
     name = None
 
     latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
-
 
 
     if request.method == 'POST':

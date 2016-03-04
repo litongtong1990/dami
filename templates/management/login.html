@@ -1,4 +1,4 @@
-{% extends "management/base.html" %}
+{% extends "management/base_new.html" %}
 {% load staticfiles %}
 {% block title %}登陆{% endblock %}
 
@@ -14,7 +14,7 @@
                 {% endif %}
                 <form method="POST" role="form" class="form-horizontal">
                     {% csrf_token %}
-                    <h1 class="form-signin-heading text-center">请登陆</h1>
+<!--                     <h1 class="form-signin-heading text-center">请登陆</h1> -->
 
                     <div class="form-group">
                         <label for="id_user_name" class="col-md-3 control-label">用户名：</label>

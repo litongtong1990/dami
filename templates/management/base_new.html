@@ -176,40 +176,44 @@
 										</li>
 									</ul>
 									<ul class="nav navbar-nav navbar-right navbar-symbols">
-										<li class="dropdown">
-											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
-											<ul class="dropdown-menu animated fadeInDownSmall">
-												<li>
-													<form role="search">
-														<div class="form-group search">
-															<input type="text" class="form-control" placeholder="Search">
-														</div>
-													</form>
-												</li>
-											</ul>
-											<div class="vertical-div hidden-xs"></div>
-										</li>
+
+						                {% if user %}
+						                    <li><p>欢迎你&nbsp;&nbsp;{{ user.myuser.nickname }}</p></li>
+						                    <li><a href="{% url 'logout' %}">注销</a></li>
+						                    <li><a href="{% url 'set_password' %}">修改密码</a></li>
+						                {% else %}
 										<li class="dropdown">
 											<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lock"></i></a>
 											<ul class="dropdown-menu animated fadeInDownSmall">
 												<li>
-													<form class="login-form">
+													<form class="login-form" method="POST">
+														{% csrf_token %}
 														<div class="form-group name">
-															<input type="text" class="form-control" placeholder="用户名">
+<!-- 															<input type="text" class="form-control" placeholder="用户名" required name="username"> -->
+														    <input type="text" class="form-control" id="id_user_name" required name="username" autofocus>
 														</div>
 														<div class="form-group password">
-															<input type="text" class="form-control" placeholder="密码">
+                            								<input type="password" class="form-control" required name="password" id="id_password">
 														</div>
-														<button type="submit" class="btn btn-gray">登录</button>
+<!-- 														<a href="{% url 'login' %}" class="btn btn-gray">登录</a> -->
+															<button type="submit" class="btn btn-gray">登录</button>														
+
 														<span>or</span>
-														<button type="submit" class="btn btn-gray btn-default">注册</button>
+														<a href="{% url 'signup' %}" class="btn btn-gray btn-default">注册</a>
 														<ul>
-															<li><a href="#">忘记密码</a></li>
+															<li><a href="#" >忘记密码</a></li>
 														</ul>
 													</form>
 												</li>
 											</ul>
 										</li>
+
+
+
+						                {% endif %}
+
+
+
 									</ul>
 								</div>
 							</nav>
