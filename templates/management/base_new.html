@@ -160,13 +160,18 @@
 												<li><a>溯源二维码</a></li>
 											</ul>
 										</li>
-										<li class="dropdown">
-											<a href="blog.html" class="dropdown-toggle" data-toggle="dropdown">系统管理</a>
-											<ul class="dropdown-menu">
-												<li><a href="blog.html">用户权限</a></li>
-												<li><a href="blog-2.html">运行状态</a></li>
-											</ul>
-										</li>
+										
+						                {% if user.myuser.permission > 1 %}
+											<li class="dropdown">
+												<a href="blog.html" class="dropdown-toggle" data-toggle="dropdown">系统管理</a>
+												<ul class="dropdown-menu">
+													<li><a href="blog.html">用户权限</a></li>
+													<li><a href="blog-2.html">运行状态</a></li>
+												</ul>
+											</li>
+						                {% endif %}
+
+
 										<li class="dropdown">
 											<a href="page-about.html" class="dropdown-toggle" data-toggle="dropdown">关于</a>
 											<ul class="dropdown-menu">
