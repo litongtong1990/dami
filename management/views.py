@@ -58,8 +58,8 @@ def my_scheduled_job():
 
     gate_port = 502
 
-    sensor_temp_adr = 8
     sensor_temp_adr = 9
+    sensor_temp_adr = 8
 
     sensor_lux_adr = 1
     sensor_lux_adr = 1
@@ -67,11 +67,13 @@ def my_scheduled_job():
     master = modbus_tcp.TcpMaster(host= gate_adr, port = gate_port)
     master.set_timeout(5.0)
 
+
     temperature_humidity = master.execute(sensor_temp_adr, cst.READ_HOLDING_REGISTERS, 0, 2)
 
     temperature = temperature_humidity[0]
     humidity= temperature_humidity[1]
-    lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
+    time.sleep(0.5)
+    lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 1, 1)[0]
 
     # content = {
     #     'temperature': temperature,
@@ -171,29 +173,6 @@ def crontab_daily_incremental():
 
 
 def index_test(request):
-
-
-    state = None
-
-    if request.method == 'POST':
-        username = request.POST.get('username', '')
-        password = request.POST.get('password', '')
-        
-        user = auth.authenticate(username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
-            return HttpResponseRedirect(reverse('index_test'))
-        else:
-            state = 'not_exist_or_password_error'
-
-            content = {
-                'active_menu': 'homepage',
-                'state': state,
-                'user': None
-            }
-
-            return render(request, 'management/login.html', content)
-
     user = request.user if request.user.is_authenticated() else None
     content = {
         'active_menu': 'homepage',
@@ -230,8 +209,8 @@ def json_test(request):
 
     gate_port = 502
 
-    sensor_temp_adr = 8
     sensor_temp_adr = 9
+    sensor_temp_adr = 8
 
     sensor_lux_adr = 1
     sensor_lux_adr = 1
@@ -243,7 +222,9 @@ def json_test(request):
 
     temperature = temperature_humidity[0]
     humidity= temperature_humidity[1]
-    lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
+    #lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 0, 1)[0]
+    time.sleep(sleep_time)
+    lux = master.execute(sensor_lux_adr, cst.READ_HOLDING_REGISTERS, 1, 1)[0]
 
     content = {
         'temperature': temperature,
@@ -263,7 +244,7 @@ def json_test(request):
 
 def signup(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('index_test'))
+        return HttpResponseRedirect(reverse('homepage'))
     state = None
     if request.method == 'POST':
         password = request.POST.get('password', '')
@@ -293,7 +274,7 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('index_test'))
+        return HttpResponseRedirect(reverse('homepage'))
     state = None
     if request.method == 'POST':
         username = request.POST.get('username', '')
@@ -301,7 +282,7 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return HttpResponseRedirect(reverse('index_test'))
+            return HttpResponseRedirect(reverse('homepage'))
         else:
             state = 'not_exist_or_password_error'
     content = {
@@ -314,7 +295,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect(reverse('index_test'))
+    return HttpResponseRedirect(reverse('homepage'))
 
 
 @login_required(login_url=reverse_lazy('login'))
@@ -512,6 +493,7 @@ def realtime_info(request):
     name = None
 
     latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
+
 
 
     if request.method == 'POST':
