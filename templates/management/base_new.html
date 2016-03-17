@@ -22,7 +22,7 @@
 
 		<!-- Bootstrap core CSS -->
 		<link href="{% static 'bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-
+		<link href="{% static 'bootstrap/css/bootstrap-switch.css' %}" rel="stylesheet">
 		<!-- Font Awesome CSS -->
 		<link href="{% static 'fonts/font-awesome/css/font-awesome.css' %}" rel="stylesheet">
 
@@ -149,7 +149,7 @@
 											<ul class="dropdown-menu">
 												<li><a href="{% url 'video' %}">视频监控</a></li>
 												<li><a href="{% url 'realtime_info' %}">历史数据</a></li>
-												<li><a>智能控制</a></li>
+												<li><a href="{% url 'control' %}">智能控制</a></li>
 											</ul>
 										</li>
 										<li class="dropdown">
@@ -262,6 +262,7 @@
 
 		
 		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap-switch.js' %}"></script>
 
 		<!-- Modernizr javascript -->
 		<script type="text/javascript" src="{% static 'plugins/modernizr.js' %}"></script>

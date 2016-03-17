@@ -344,7 +344,9 @@ def set_password(request):
     return render(request, 'management/set_password.html', content)
 
 
-@user_passes_test(permission_check, login_url=reverse_lazy('login'))
+# @user_passes_test(permission_check, login_url=reverse_lazy('login'))
+@login_required(login_url=reverse_lazy('login'))
+
 def add_book(request):
     user = request.user
     state = None
@@ -366,6 +368,32 @@ def add_book(request):
         'state': state,
     }
     return render(request, 'management/add_book.html', content)
+
+
+def control(request):
+    user = request.user
+    state = None
+    if request.method == 'POST':
+        
+
+        new_book = Book(
+                name=request.POST.get('name', ''),
+                author=request.POST.get('author', ''),
+                category=request.POST.get('book_type', ''),
+                price=request.POST.get('price', 0),
+                publish_date=request.POST.get('publish_date', '')
+        )
+        new_book.save()
+        state = 'success'
+    content = {
+        'user': user,
+        'active_menu': 'add_book',
+        'state': state,
+    }
+    return render(request, 'management/control.html', content)
+
+
+
 
 
 def view_book_list(request):

@@ -1,9 +1,30 @@
 {% extends "management/base_new.html" %}
 {% load staticfiles %}
-{% block title %}添加图书{% endblock %}
+{% block title %}智能控制{% endblock %}
 
 {% block content %}
 
+    <input type="checkbox" name="my-checkbox" checked>
+
+
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap-switch.js' %}"></script>
+
+
+    <script type="text/javascript">
+
+        $('input[name="my-checkbox"]').bootstrapSwitch('state', true);
+
+        $('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
+          console.log(this); // DOM element
+          console.log(event); // jQuery event
+          console.log(state); // true | false
+        });
+
+
+    </script>
+
+
+<!-- 
     <div class="container">
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-sm-10 col-sm-offset-1">
@@ -60,6 +81,6 @@
             </div>
         </div>
     </div>
-
+ -->
 
 {% endblock %}
