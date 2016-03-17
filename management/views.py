@@ -345,6 +345,7 @@ def set_password(request):
 
 
 # @user_passes_test(permission_check, login_url=reverse_lazy('login'))
+
 @login_required(login_url=reverse_lazy('login'))
 
 def add_book(request):
@@ -359,7 +360,10 @@ def add_book(request):
                 category=request.POST.get('book_type', ''),
                 price=request.POST.get('price', 0),
                 publish_date=request.POST.get('publish_date', '')
+                
+
         )
+        
         new_book.save()
         state = 'success'
     content = {
@@ -370,27 +374,76 @@ def add_book(request):
     return render(request, 'management/add_book.html', content)
 
 
+
+
+
+
 def control(request):
-    user = request.user
+    user = request.user if request.user.is_authenticated() else None
     state = None
+    
+
+
     if request.method == 'POST':
         
+        state=request.POST.get('state','')
 
-        new_book = Book(
-                name=request.POST.get('name', ''),
-                author=request.POST.get('author', ''),
-                category=request.POST.get('book_type', ''),
-                price=request.POST.get('price', 0),
-                publish_date=request.POST.get('publish_date', '')
-        )
-        new_book.save()
+        if state == 'true':
+
+            result = control_light('open')
+            print result
+            print "the light is on"
+        else:
+            result = control_light('close')
+            print result
+            print "the light if off"
+
         state = 'success'
+
     content = {
         'user': user,
         'active_menu': 'add_book',
         'state': state,
     }
     return render(request, 'management/control.html', content)
+
+
+
+
+def control_light(status):
+    gate_adr = '192.168.0.201'
+    gate_adr = '192.168.0.200'
+    gate_adr = '101.86.93.63'
+    gate_port = 502
+
+    count = 0
+    sleep_time = 0.1
+
+    control_adr = 16
+
+    control_channel = 0
+    control_channel = 1
+
+
+    #Connect to the slave
+    #master = modbus_tcp.TcpMaster(host='192.168.0.7', port=502)
+    master = modbus_tcp.TcpMaster(host= gate_adr, port = gate_port)
+    master.set_timeout(5.0)
+
+    #this is the api to control the relay
+    #control_channel, there are totally two relays, 0 and 1
+    #the last parameter is the status of the relay, 0 means open, 1 means close
+    
+    if status=='close':
+        master.execute(control_adr, cst.WRITE_SINGLE_COIL, control_channel, 1, 1)     #close channel 1
+          
+    else:
+        master.execute(control_adr, cst.WRITE_SINGLE_COIL, control_channel, 1, 0)     #open channel 1
+
+    control_status = master.execute(control_adr, cst.READ_COILS, control_channel, 1 ) 
+    time.sleep(sleep_time)
+    return control_status[0]
+
 
 
 
