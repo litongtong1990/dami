@@ -1,4 +1,4 @@
-{% extends "management/base.html" %}
+{% extends "management/base_new.html" %}
 {% block title %}生成二维码{% endblock %}
 
 {% block content %}
@@ -21,9 +21,6 @@
 
 
 
-
-
-
                 <div class="row">
                     
                     <div class="col-sm-8">
@@ -32,19 +29,24 @@
                             <h3 class="form-signin-heading text-center">溯源二维码生成</h3>
 
                             <div class="form-group">
-                                <label for="id_name" class="col-md-3 control-label">产品名称</label>
+                                <label for="id_name" class="col-md-3 control-label">地块号</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" id="id_name" required name="name" autofocus>
                                 </div>
                             </div>
 
                             <div class="form-group">
+                                <label for="id_name" class="col-md-3 control-label">作物名称</label>
+                                <div class="col-md-9">
+                                    <input type="text" class="form-control" id="id_name" required name="zhongzi" autofocus>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="id_description" class="col-md-3 control-label">发送到邮箱</label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" required name="description" id="id_description">
                                 </div>
                             </div>
-
 
 
                             <div class="form-group">

@@ -1,0 +1,117 @@
+{% extends "management/base_new.html" %}
+{% load staticfiles %}
+{% block title %}二维码溯源页面{% endblock %}
+
+{% block content %}
+
+
+
+			<!-- main start -->
+			<section class="main">
+
+				<!-- page intro start -->
+				<!--div class="page-intro">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-6">
+								<h1 class="page-title">田园香一号</h1>
+							</div>
+						</div>
+					</div>
+				</div-->
+				<!-- page intro end -->
+
+				<!-- main content wrapper start -->
+				<div class="main-content-wrapper">
+					<div class="container">
+						<div class="row">
+
+							<!-- sidebar start -->
+							<div class=" ">
+							<aside class="sidebar col-md-2">
+								<div class="block clearfix">
+									<h3 class="page-title"></h3>
+									<h3 class="page-title">田园香一号</h3>
+									<h3>溯源信息</h3>
+
+
+                                       	<ul id="documenter_nav">
+		                                	<li><a class="current" href="#documenter_cover">基本信息</a></li>
+				
+		                                	<li><a href="#zhongzi" title="zhongzi">种子信息</a></li>
+			                                <li><a href="#nongshi" title="nongshi">农事活动</a></li>
+		                                	<li><a href="#jiedian" title="jiedian">主要生长节点</a></li>
+		                                </ul>
+
+								</div>
+
+							</aside>
+							</div>
+							<!-- sidebar end -->
+
+							<!-- main content start -->
+							<section class="main-content col-md-8 col-md-offset-1">
+								<a href="{% static 'images/jianjie.jpg' %}" class="image-wrapper mask-wrapper popup-img" title="Title of image">
+									<img src="{% static 'images/jianjie.jpg' %}" alt="blog image">
+									<span class="image-label"><i class="fa fa-camera"></i></span>
+									<span class="mask"><span class="triangle"><i class="fa fa-plus"></i></span></span>
+								</a>
+								<section>
+									<h2 class="title">基本信息</h2>
+									<p>工单号</p>
+									<p>地块 {{field_name}}</p>
+									<p>面积</p>
+									<p>播种量</p>
+									<p>播种人</p>
+									<p>收获量</p>
+								</section>
+                                
+<!-- 
+                                <section id="zhongzi">
+									<h2 class="title">种子信息</h2>
+									<p>种子品名</p>
+									<p>供应商</p>
+									<p>批号</p>
+									<p>生产日期</p>
+									<p>保质期</p>
+								</section>
+                                <section id="nongshi">
+									<h2 class="title">农事活动</h2>
+									<p>批号</p>
+									<p>日期</p>
+									<p>品名</p>
+									<p>供应商</p>
+									<p>活动</p>
+									<p>浓度</p>
+									<p>总使用量</p>
+									<p>实施人</p>
+									<p>人员数量</p>
+								</section>
+                                <section id="jiedian">
+							    	<h2 class="title">主要生长节点</h2>
+						    		<p>发芽</p>
+						    		<p>分蘖</p>
+						    		<p>抽穗</p>
+						    		<p>灌浆</p>
+							    	<p>收割</p>
+                                </section>
+ -->							
+
+							</section>
+							<!-- main content end -->
+
+						</div>
+					</div>
+				</div>
+				<!-- main content wrapper end -->
+
+			</section>
+			<!-- main end -->
+
+{% endblock %}
+
+
+
+
+
+

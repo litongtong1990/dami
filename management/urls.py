@@ -15,7 +15,9 @@ urlpatterns = [
     url(r'^set_password/$', views.set_password, name='set_password'),
     url(r'^add_book/$', views.add_book, name='add_book'),
     url(r'^control/$', views.control, name='control'),
-    url(r'^generate_qrcode/$', views.generate_qrcode, name='add_img'),
+    url(r'^mqtt/$', views.mqtt, name='mqtt'),
+
+    url(r'^generate_qrcode/$', views.generate_qrcode, name='generate_qrcode'),
     url(r'^realtime_info/$', views.realtime_info, name='realtime_info'),
     url(r'^view_book_list/$', views.view_book_list, name='view_book_list'),
     url(r'^video/$', views.video, name='video'),
@@ -26,5 +28,6 @@ urlpatterns = [
 
 
     url(r'^view_book/detail/$', views.detail, name='detail'),
-    url(r'^qrcode/(?P<product_name>rice[0-9]+)/$', views.qrcode_generate_page, name='qrcode'),
+    url(r'^qrcode/(?P<field_name>field[0-9]+)/$', views.qrcode_generate_page, name='qrcode'),
+    url(r'^fields/(?P<field_name>field[0-9]+)/$', views.fields, name='fields'),
 ]

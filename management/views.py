@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import MyUser, Book, Img,Environment,Environment_Daily,Environment_Weekly,Environment_Monthly
+from models import MyUser, Book, Img,Environment,Environment_Daily,Environment_Weekly,Environment_Monthly,Suyuan
 from django.core.urlresolvers import reverse, reverse_lazy
 from utils import permission_check
 import qrcode
@@ -39,7 +39,8 @@ import modbus_tk.modbus_tcp as modbus_tcp
 import time
 ##################################################
 
-
+import logging
+logger = logging.getLogger(__name__)
 
 
 def my_scheduled_job():
@@ -203,6 +204,20 @@ def index_test(request):
 
 
 
+def fields(request,field_name):
+
+    user = request.user if request.user.is_authenticated() else None
+    
+    content = {
+        'active_menu': 'homepage',
+        'user': user,
+        'field_name':field_name
+    }
+
+    return render(request, 'management/qrcode_suyuan.html', content)
+
+
+
 def suyuan(request):
     user = request.user if request.user.is_authenticated() else None
     content = {
@@ -231,7 +246,7 @@ def json_test(request):
     gate_port = 502
 
     sensor_temp_adr = 8
-    sensor_temp_adr = 9
+    # sensor_temp_adr = 9
 
     sensor_lux_adr = 1
     sensor_lux_adr = 1
@@ -346,6 +361,10 @@ def set_password(request):
 
 # @user_passes_test(permission_check, login_url=reverse_lazy('login'))
 
+
+
+
+
 @login_required(login_url=reverse_lazy('login'))
 
 def add_book(request):
@@ -354,17 +373,16 @@ def add_book(request):
     if request.method == 'POST':
         
 
-        new_book = Book(
-                name=request.POST.get('name', ''),
-                author=request.POST.get('author', ''),
-                category=request.POST.get('book_type', ''),
-                price=request.POST.get('price', 0),
-                publish_date=request.POST.get('publish_date', '')
+        new_suyuan = Suyuan(
+                field1=request.POST.get('field1', ''),
+                field2=request.POST.get('field2', ''),
+                field3=request.POST.get('field3', ''),
+                field4=request.POST.get('field4', '')
                 
-
         )
         
-        new_book.save()
+        new_suyuan.save()
+
         state = 'success'
     content = {
         'user': user,
@@ -381,9 +399,6 @@ def add_book(request):
 def control(request):
     user = request.user if request.user.is_authenticated() else None
     state = None
-    
-
-
     if request.method == 'POST':
         
         state=request.POST.get('state','')
@@ -392,12 +407,13 @@ def control(request):
 
             result = control_light('open')
             print result
-            print "the light is on"
+            print "the light is on...."
+            logger.info("the light is on....")
         else:
             result = control_light('close')
             print result
-            print "the light if off"
-
+            print "the light if off...."
+            logger.info("the light is off....")
         state = 'success'
 
     content = {
@@ -406,6 +422,34 @@ def control(request):
         'state': state,
     }
     return render(request, 'management/control.html', content)
+
+
+def mqtt(request):
+    user = request.user if request.user.is_authenticated() else None
+    state = None
+    if request.method == 'POST':
+        
+        state=request.POST.get('state','')
+
+        if state == 'true':
+
+            result = control_light('open')
+            print result
+            print "the light is on...."
+            logger.info("the light is on....")
+        else:
+            result = control_light('close')
+            print result
+            print "the light if off...."
+            logger.info("the light is off....")
+        state = 'success'
+
+    content = {
+        'user': user,
+        'active_menu': 'add_book',
+        'state': state,
+    }
+    return render(request, 'management/mqtt.html', content)
 
 
 
@@ -521,8 +565,8 @@ def video(request):
 
 
 # This function is to for generate the qrcode for a specific URL
-def qrcode_generate_page(request, product_name):
-    url="http://10.140.41.190:8000/polls/"+product_name
+def qrcode_generate_page(request, field_name):
+    url="http://127.0.0.1:8000/fields/"+field_name
     print "====="
     print url
     print "====="
@@ -555,7 +599,8 @@ def detail(request):
 
 
 
-@user_passes_test(permission_check, login_url=reverse_lazy('login'))
+#@user_passes_test(permission_check, login_url=reverse_lazy('login'))
+@login_required(login_url=reverse_lazy('login'))
 def generate_qrcode(request):
     user = request.user
     state = None

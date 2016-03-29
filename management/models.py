@@ -45,12 +45,7 @@ class Img(models.Model):
 class Environment(models.Model):
     temperature=models.FloatField(null=True, blank=True, default=None)
     humidity=models.FloatField(null=True, blank=True, default=None)
-    # wind_speed=models.FloatField(null=True, blank=True, default=None)
-    # wind_direction=models.FloatField(null=True, blank=True, default=None)
     light=models.FloatField(null=True, blank=True, default=None)
-    # soid_temperature=models.FloatField(null=True, blank=True, default=None)
-    # soid_humidity=models.FloatField(null=True, blank=True, default=None)
-    # product_name = models.CharField(max_length=200,default=None)
     record_date = models.DateTimeField(default=None)
 
 
@@ -72,25 +67,24 @@ class Environment_Daily(models.Model):
 class Environment_Weekly(models.Model):
     temperature=models.FloatField(null=True, blank=True, default=None)
     humidity=models.FloatField(null=True, blank=True, default=None)
-    # wind_speed=models.FloatField(null=True, blank=True, default=None)
-    # wind_direction=models.FloatField(null=True, blank=True, default=None)
     light=models.FloatField(null=True, blank=True, default=None)
-    # soid_temperature=models.FloatField(null=True, blank=True, default=None)
-    # soid_humidity=models.FloatField(null=True, blank=True, default=None)
-    # product_name = models.CharField(max_length=200,default=None)
     record_date = models.DateTimeField(default=None)
 
 
 class Environment_Monthly(models.Model):
     temperature=models.FloatField(null=True, blank=True, default=None)
     humidity=models.FloatField(null=True, blank=True, default=None)
-    # wind_speed=models.FloatField(null=True, blank=True, default=None)
-    # wind_direction=models.FloatField(null=True, blank=True, default=None)
     light=models.FloatField(null=True, blank=True, default=None)
-    # soid_temperature=models.FloatField(null=True, blank=True, default=None)
-    # soid_humidity=models.FloatField(null=True, blank=True, default=None)
-    # product_name = models.CharField(max_length=200,default=None)
     record_date = models.DateTimeField(default=None)
+
+
+class Suyuan(models.Model):
+    field1 = models.CharField(max_length=128)
+    field2 = models.CharField(max_length=128)
+    field3 = models.CharField(max_length=128)
+    field4 = models.DateField()
+
+
 
 
 
