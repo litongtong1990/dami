@@ -13,7 +13,8 @@ from django.http import HttpResponse
 import json
 from django.utils import timezone
 import datetime
-
+import paho.mqtt.publish as publish
+import random
 
 
 #====== this is added for sensor===============
@@ -395,7 +396,6 @@ def add_book(request):
 
 
 
-
 def control(request):
     user = request.user if request.user.is_authenticated() else None
     state = None
@@ -404,14 +404,15 @@ def control(request):
         state=request.POST.get('state','')
 
         if state == 'true':
-
-            result = control_light('open')
-            print result
+            #result = control_light('open')
+            result = control_light_mqtt('open')
+            #print result
             print "the light is on...."
             logger.info("the light is on....")
         else:
-            result = control_light('close')
-            print result
+            #result = control_light('close')
+            result = control_light_mqtt('close')
+            #print result
             print "the light if off...."
             logger.info("the light is off....")
         state = 'success'
@@ -489,6 +490,27 @@ def control_light(status):
     return control_status[0]
 
 
+
+
+def control_light_mqtt(status):
+    
+    # temperature = random.randint(1, 10000)
+    # humidity = random.randint(1, 10000)
+    # lux = random.randint(1, 10000)
+
+    # msgs = [
+    #     {'topic':"temperature", 'payload':temperature},
+    #     {'topic':"humidity", 'payload':humidity},
+    #     {'topic':"lux", 'payload':lux},
+    #     ]
+
+    msgs = [
+        {'topic':"status", 'payload':status}
+        ]    
+
+    print msgs
+    publish.multiple(msgs, hostname="10.75.6.80")
+    return status
 
 
 
