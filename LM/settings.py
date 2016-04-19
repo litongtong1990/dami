@@ -172,3 +172,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static').replace('\\', '/')
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media').replace('\\', '/')
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))

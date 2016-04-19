@@ -15,6 +15,11 @@ from django.utils import timezone
 import datetime
 import paho.mqtt.publish as publish
 import random
+import json
+import os
+
+from django.conf import settings
+#from django.conf.settings import PROJECT_ROOT
 
 
 #====== this is added for sensor===============
@@ -394,8 +399,6 @@ def add_book(request):
 
 
 
-
-
 def control(request):
     user = request.user if request.user.is_authenticated() else None
     state = None
@@ -425,37 +428,23 @@ def control(request):
     return render(request, 'management/control.html', content)
 
 
+
+def get_string_from_json(path):
+    
+    file_object = open(path)
+    json_string = file_object.read()
+    json_file= json.loads(json_string)
+    return json_file
+
+
 def mqtt(request):
     user = request.user if request.user.is_authenticated() else None
-    state = None
-    if request.method == 'POST':
-        
-        state=request.POST.get('state','')
-
-        if state == 'true':
-
-            result = control_light('open')
-            print result
-            print "the light is on...."
-            logger.info("the light is on....")
-        else:
-            result = control_light('close')
-            print result
-            print "the light if off...."
-            logger.info("the light is off....")
-        state = 'success'
-
-
-    display = {
-                'temperature':['id1','id2'],
-                'humidity':['id3','id4'],
-                'lux':['id5']
-            }
+    state = None    
+    path = os.path.join(settings.PROJECT_ROOT, 'test.json')
+    display = get_string_from_json(path)
 
 
     latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
-
-    
 
     content = {
         'user': user,
@@ -466,9 +455,6 @@ def mqtt(request):
     }
    
     
-
-
-
     return render(request, 'management/mqtt.html', content)
 
 
