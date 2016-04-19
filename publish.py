@@ -64,11 +64,25 @@ temperature = random.randint(1, 10000)
 humidity = random.randint(1, 10000)
 lux = random.randint(1, 10000)
 
-msgs = [
-    {'topic':"temperature", 'payload':temperature},
-    {'topic':"humidity", 'payload':humidity},
-    {'topic':"lux", 'payload':lux},
-    ]
+
+msgs = []
+
+for sensor in ['temperature','humidity','lux']:
+	for i in range(1,7):
+		id_name = 'id'+str(i)
+		topic = sensor + '/'+ id_name
+		#print topic
+		item = {'topic':topic,'payload':random.randint(1, 10000)}
+		msgs.append(item)
+
+
+
+
+# msgs = [
+#     {'topic':"temperature", 'payload':temperature},
+#     {'topic':"humidity", 'payload':humidity},
+#     {'topic':"lux", 'payload':lux},
+#     ]
 
 print msgs
 

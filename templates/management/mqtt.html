@@ -6,31 +6,6 @@
 
 
 
-<!-- 
-    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap-switch.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/mqttws31.js' %}"></script>
-
-    <label>当前温度</label>
-    <meter max="100" low="60" high="80" value="30" id="meter"></meter>
-
-    <script>
-      var client = new Paho.MQTT.Client("10.75.6.80", 10001, "clientId");
-
-      client.onMessageArrived = function (msg) {
-        document.querySelector("#meter").value = msg.payloadString;
-      };
-
-      client.connect({
-        onSuccess: function () {
-          client.subscribe("floor-5/temperature");
-        }
-      });
-    </script>
-
-
- -->
-
-
     <script type="text/javascript" src="{% static 'js/mqttws31.js' %}"></script>
 
     <div class="container">
@@ -45,297 +20,200 @@
                             <h3 class="form-signin-heading text-center">实时数据测试</h3>
 
 
+                            {% for k,v in display.items %}
 
-                            <button type="button" class="btn btn-info" id="temperature">温度</button>
-                            <button type="button" class="btn btn-info" id="humidity">湿度</button>
-                            <button type="button" class="btn btn-info" id="lux">光照</button>
-
+                                {%for id in v%}
+                                    <button type="button" class="btn btn-info" id="{{k}}_{{id}}">
+                                      {% if k == "temperature" %}
+                                        温度{{id}}
+                                      {% elif k == "humidity" %}
+                                        湿度{{id}}
+                                      {% elif k == "lux" %}
+                                        光照{{id}}
+                                      {% else %}
+                                        未知                                     
+                                      {% endif %}
+                                    </button>    
+                                </tr>
+                                {% endfor %}
+                            {% endfor %}
 
 
                              <script type="text/javascript">
 
-                                $('#temperature').on('click', function (e) {
-                                    $("#myModal_temperature").modal(); 
-                                })
 
-
-                                $('#humidity').on('click', function (e) {
-                                    $("#myModal_humidity").modal(); 
-                                })
-
-                                $('#lux').on('click', function (e) {
-                                    $("#myModal_lux").modal(); 
-                                })
+                                  {% for k,v in display.items%}
+                                    {%for id in v%}
+                                    $('#{{k}}_{{id}}').on('click', function (e) {
+                                        console.log("{{id}}")
+                                        $("#myModal_{{k}}_{{id}}").modal(); 
+                                    })
+                                    {% endfor %}
+                                  {% endfor %}
 
                              </script>
 
 
-                            <div class="modal fade" id="myModal_temperature" tabindex="-1" role="dialog" 
-                               aria-labelledby="myModalLabel" aria-hidden="true">
-                               <div class="modal-dialog">
-                                  <div class="modal-content">
-                                     <div class="modal-header">
-                                        <button type="button" class="close" 
-                                           data-dismiss="modal" aria-hidden="true">
-                                              &times;
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">
-                                           温度历史数据
-                                        </h4>
-                                     </div>
-                                     <div class="modal-body">
-                                            <table class="highchart temperature" data-graph-container-before="1" data-graph-type="line" style="display:none">
-                                                <caption>温度历史数据</caption>
-                                                <thead>
-                                                    <tr>                                  
-                                                        <th>时间</th>
-                                                        <th>平均温度</th>
-                                                        <th>最高温度</th> 
-                                                        <th>最低温度</th>                                                        
-                                                    </tr>
-                                                 </thead>
-                                                 <tbody>
+                            {% for k,v in display.items%}
+                              {%for id in v%}
+                                  <div class="modal fade" id="myModal_{{k}}_{{id}}" tabindex="-1" role="dialog" 
+                                     aria-labelledby="myModalLabel" aria-hidden="true">
+                                     <div class="modal-dialog">
+                                        <div class="modal-content">
+                                           <div class="modal-header">
+                                              <button type="button" class="close" 
+                                                 data-dismiss="modal" aria-hidden="true">
+                                                    &times;
+                                              </button>
+                                              <h4 class="modal-title" id="myModalLabel">
 
-                                                    {% for item in latest_data %}
-                                                        <tr>
-                                                            <td>{{item.record_date}}</td>
-                                                            <td>{{item.temperature}}</td>
-                                                            <td>{{item.temperature_high}}</td>
-                                                            <td>{{item.temperature_low}}</td>
-                                                        </tr>
+                                                {% if k == "temperature" %}
+                                                  温度历史数据
+                                                {% elif k == "humidity" %}
+                                                  湿度历史数据
+                                                {% elif k == "lux" %}
+                                                  光照历史数据
+                                                {% else %}
+                                                  未知历史数据                                     
+                                                {% endif %}
 
-                                                    {% endfor %}
-                                                
-                                                </tbody>
-                                            </table>
-                                     </div>
+                                              </h4>
+                                           </div>
 
 
-                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" 
-                                           data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="tijiao_temperature" >
-                                           历史数据
-                                        </button>
-                                     </div>
+                                          {% if k == "temperature" %}
+                                                 <div class="modal-body">
+                                                        <table class="highchart {{k}} {{id}}" data-graph-container-before="1" data-graph-type="line" style="display:none">
+                                                            <caption>温度历史数据</caption>
+                                                            <thead>
+                                                                <tr>                                  
+                                                                    <th>时间</th>
+                                                                    <th>平均温度</th>
+                                                                    <th>最高温度</th> 
+                                                                    <th>最低温度</th>                                                        
+                                                                </tr>
+                                                             </thead>
+                                                             <tbody>
+
+                                                                {% for item in latest_data %}
+                                                                    <tr>
+                                                                        <td>{{item.record_date}}</td>
+                                                                        <td>{{item.temperature}}</td>
+                                                                        <td>{{item.temperature_high}}</td>
+                                                                        <td>{{item.temperature_low}}</td>
+                                                                    </tr>
+
+                                                                {% endfor %}
+                                                            
+                                                            </tbody>
+                                                        </table>
+                                                 </div>                                                  
+                                          {% elif k == "humidity" %}
+                                                 <div class="modal-body">
+                                                        <table class="highchart {{k}} {{id}}" data-graph-container-before="1" data-graph-type="line" style="display:none">
+                                                            <caption>湿度历史数据</caption>
+                                                            <thead>
+                                                                <tr>                                  
+                                                                    <th>时间</th>
+                                                                    <th>平均湿度</th>
+                                                                    <th>最高湿度</th>
+                                                                    <th>最低湿度</th>
+                                                                </tr>
+                                                             </thead>
+                                                             <tbody>
+
+                                                                {% for item in latest_data %}
+                                                                    <tr>
+                                                                        <td>{{item.record_date}}</td>
+                                                                        <td>{{item.humidity}}</td>
+                                                                        <td>{{item.humidity_high}}</td>
+                                                                        <td>{{item.humidity_low}}</td>
+                                                                    </tr>
+
+                                                                {% endfor %}
+                                                            
+                                                            </tbody>
+                                                        </table>
+                                                 </div>
 
 
+                                            
+                                          {% elif k == "lux" %}
+                                                 <div class="modal-body">
+                                                        <table class="highchart {{k}} {{id}}" data-graph-container-before="1" data-graph-type="line" style="display:none">
+                                                            <caption>光照历史数据</caption>
+                                                            
+                                                            <thead>
+                                                                <tr>                                  
+                                                                    <th>时间</th>
+                                                                    <th>平均光照</th>
+                                                                    <th>最高光照</th>
+                                                                    <th>最低光照</th>
+                                                                </tr>
+                                                             </thead>
+                                                             <tbody>
+
+                                                                {% for item in latest_data %}
+                                                                    <tr>
+                                                                        <td>{{item.record_date}}</td>
+                                                                        <td>{{item.light}}</td>
+                                                                        <td>{{item.light_high}}</td>
+                                                                        <td>{{item.light_low}}</td>
+                                                                    </tr>
+
+                                                                {% endfor %}
+                                                            
+                                                            </tbody>
+                                                        </table>
+                                                 </div>
+                                          {% else %}
+                                                  未知历史数据                                     
+                                          {% endif %}
+
+                                           <div class="modal-footer">
+                                              <button type="button" class="btn btn-default" 
+                                                 data-dismiss="modal">关闭
+                                              </button>
+                                              <button type="button" class="btn btn-primary" id="tijiao_{{k}}_{{id}}" >
+                                                 历史数据
+                                              </button>
+                                           </div>
+
+
+                                        </div>
                                   </div>
-                            </div>
-                            </div>
-
-                            <div class="modal fade" id="myModal_humidity" tabindex="-1" role="dialog" 
-                               aria-labelledby="myModalLabel" aria-hidden="true">
-                               <div class="modal-dialog">
-                                  <div class="modal-content">
-                                     <div class="modal-header">
-                                        <button type="button" class="close" 
-                                           data-dismiss="modal" aria-hidden="true">
-                                              &times;
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">
-                                           湿度历史数据
-                                        </h4>
-                                     </div>
-                                     <div class="modal-body">
-                                            <table class="highchart humidity" data-graph-container-before="1" data-graph-type="line" style="display:none">
-                                                <caption>湿度历史数据</caption>
-                                                <thead>
-                                                    <tr>                                  
-                                                        <th>时间</th>
-                                                        <th>平均湿度</th>
-                                                        <th>最高湿度</th>
-                                                        <th>最低湿度</th>
-                                                    </tr>
-                                                 </thead>
-                                                 <tbody>
-
-                                                    {% for item in latest_data %}
-                                                        <tr>
-                                                            <td>{{item.record_date}}</td>
-                                                            <td>{{item.humidity}}</td>
-                                                            <td>{{item.humidity_high}}</td>
-                                                            <td>{{item.humidity_low}}</td>
-                                                        </tr>
-
-                                                    {% endfor %}
-                                                
-                                                </tbody>
-                                            </table>
-                                     </div>
-
-
-                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" 
-                                           data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="tijiao_humidity" >
-                                           历史数据
-                                        </button>
-                                     </div>
-
-
                                   </div>
-                            </div>
-                            </div>
-
-
-                            <div class="modal fade" id="myModal_lux" tabindex="-1" role="dialog" 
-                               aria-labelledby="myModalLabel" aria-hidden="true">
-                               <div class="modal-dialog">
-                                  <div class="modal-content">
-                                     <div class="modal-header">
-                                        <button type="button" class="close" 
-                                           data-dismiss="modal" aria-hidden="true">
-                                              &times;
-                                        </button>
-                                        <h4 class="modal-title" id="myModalLabel">
-                                           光照历史数据
-                                        </h4>
-                                     </div>
-                                     <div class="modal-body">
-                                            <table class="highchart lux" data-graph-container-before="1" data-graph-type="line" style="display:none">
-                                                <caption>光照历史数据</caption>
-                                                
-                                                <thead>
-                                                    <tr>                                  
-                                                        <th>时间</th>
-                                                        <th>平均光照</th>
-                                                        <th>最高光照</th>
-                                                        <th>最低光照</th>
-                                                    </tr>
-                                                 </thead>
-                                                 <tbody>
-
-                                                    {% for item in latest_data %}
-                                                        <tr>
-                                                            <td>{{item.record_date}}</td>
-                                                            <td>{{item.light}}</td>
-                                                            <td>{{item.light_high}}</td>
-                                                            <td>{{item.light_low}}</td>
-                                                        </tr>
-
-                                                    {% endfor %}
-                                                
-                                                </tbody>
-
-
-                                            </table>
-
-
-
-                                     </div>
-
-
-                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" 
-                                           data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="tijiao_lux" >
-                                           历史数据
-                                        </button>
-                                     </div>
-
-
-
-                                  </div>
-                            </div>
-                            </div>
-
+                              {% endfor %}
+                            {% endfor %}
 
 
                             <script type="text/javascript">
 
-                                        var temperature_count=1;
-                                        var humidity_count=1;
-                                        var lux_count=1;
+                                {% for k,v in display.items %}
+                                    {% for id in v %}
+                                      var {{k}}_{{id}}_count =1;
+                                    {% endfor %}
+                                {% endfor %}
 
-                                        $('#tijiao_temperature').on('click', function (e) {
-                                        if(temperature_count==1)
+                                {% for k,v in display.items %}
+                                    {% for id in v %}
+
+                                        $('#tijiao_{{k}}_{{id}}').on('click', function (e) {
+                                        if({{k}}_{{id}}_count==1)
                                         {
-                                            $('table.highchart.temperature').highchartTable();
-                                            temperature_count++;                                            
+                                            $('table.highchart.{{k}}.{{id}}').highchartTable();
+                                            {{k}}_{{id}}_count++;                                            
                                         }
 
                                         })
 
-
-                                        $('#tijiao_humidity').on('click', function (e) {
-                                            if(humidity_count==1)
-                                            {
-                                                $('table.highchart.humidity').highchartTable();
-                                                humidity_count++;                                               
-                                            }
-
-                                        })
-
-
-                                        $('#tijiao_lux').on('click', function (e) {
-
-                                            if (lux_count==1)
-                                            {
-                                                 $('table.highchart.lux').highchartTable();   
-                                                 lux_count++;                                            
-                                            }
-
-                                        })
-
+                                    {% endfor %}
+                                {% endfor %}
 
                             </script>
 
 
-
-
                             <script type="text/javascript">
-
-
-
-                                // $('#fire').on('click', function (e) {
-                                //      // $.get('/json_test/', function(data){
-                                //      //        alert(data);
-                                //      //       });
-                                //     $.getJSON('/json_test', function(data) {
-                                //         $.each(data, function(index, element) {
-                                //                 console.log(index+" : "+ element);   
-                                //                 $("#"+index).text(element);                                                
-                                //         });
-                                //     });
-                                // })
-
-
-                                function sleep(milliseconds) {
-                                  var start = new Date().getTime();
-                                  for (var i = 0; i < 1e7; i++) {
-                                    if ((new Date().getTime() - start) > milliseconds){
-                                      break;
-                                    }
-                                  }
-                                }
-
-
-                                function startrequest() {
-                                    $.getJSON('/json_test', function(data) {
-                                        $.each(data, function(index, element) {
-                                                //console.log(index+" : "+ element);
-                                                var item;
-                                                if(index=='temperature')
-                                                {
-                                                    item="温度"
-                                                }
-                                                else if(index=="humidity")
-                                                {
-                                                    item="湿度"
-                                                }
-                                                else
-                                                {
-                                                    item="光照"
-                                                }
-
-                                                $("#"+index).text(item+" "+element);                                                
-                                        });
-                                    });
-                                }
 
                                 function randomString(len, bits)
                                 {
@@ -349,46 +227,52 @@
                                     return outStr.toUpperCase();
                                 }
 
-
-
                             </script>
 
                             <script>
                               var clientId = randomString(20, 26);
-                              //console.log(clientId);
+
                               var client = new Paho.MQTT.Client("10.75.6.80", 10001, clientId);
 
                               client.onMessageArrived = function (msg) {
-                                //document.querySelector("#meter").value = msg.payloadString;
+
                                 var item;
-                                if(msg.destinationName=='temperature')
+                                
+                                if(msg.destinationName.split("/")[0]=='temperature')
                                 {
-                                    item="温度"
+                                    item=msg.destinationName.split("/")[1]+"温度";
                                 }
-                                else if(msg.destinationName=="humidity")
+                                else if(msg.destinationName.split("/")[0]=="humidity")
                                 {
-                                    item="湿度"
+                                    item=msg.destinationName.split("/")[1]+"湿度";
                                 }
                                 else
                                 {
-                                    item="光照"
+                                    item=msg.destinationName.split("/")[1]+"光照";
                                 }
 
-                                //console.log(item+" "+msg.payloadString);
-                                $("#"+msg.destinationName).text(item+" "+msg.payloadString);
+                                {% for k,v in display.items %}
+                                    {% for id in v %}
+                                        if(msg.destinationName=='{{k}}/{{id}}')
+                                        {
+                                            $("#{{k}}_{{id}}").text(item+" "+msg.payloadString);
+
+                                        }
+                                    {% endfor %}
+                                {% endfor %}
+
                               };
 
                               client.connect({
                                 onSuccess: function () {
-                                  client.subscribe("temperature");
-                                  client.subscribe("humidity");
-                                  client.subscribe("lux");  
+
+                                {% for k,v in display.items %}
+                                    client.subscribe("{{k}}/#");
+                                {% endfor %}
+
                                 }
                               });
                             </script>
-
-
-
 
                         </form>
                     </div>

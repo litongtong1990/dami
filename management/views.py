@@ -445,11 +445,30 @@ def mqtt(request):
             logger.info("the light is off....")
         state = 'success'
 
+
+    display = {
+                'temperature':['id1','id2'],
+                'humidity':['id3','id4'],
+                'lux':['id5']
+            }
+
+
+    latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
+
+    
+
     content = {
         'user': user,
         'active_menu': 'add_book',
         'state': state,
+        'display':display,
+        'latest_data':latest_data
     }
+   
+    
+
+
+
     return render(request, 'management/mqtt.html', content)
 
 
@@ -678,6 +697,8 @@ def realtime_info(request):
             print e
         else:
             state = 'success'
+
+
     content = {
         'user': user,
         'state': state,
