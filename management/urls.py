@@ -16,7 +16,6 @@ urlpatterns = [
     url(r'^add_book/$', views.add_book, name='add_book'),
     url(r'^control/$', views.control, name='control'),
     url(r'^mqtt/$', views.mqtt, name='mqtt'),
-
     url(r'^generate_qrcode/$', views.generate_qrcode, name='generate_qrcode'),
     url(r'^realtime_info/$', views.realtime_info, name='realtime_info'),
     url(r'^view_book_list/$', views.view_book_list, name='view_book_list'),

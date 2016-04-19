@@ -13,10 +13,8 @@ from django.http import HttpResponse
 import json
 from django.utils import timezone
 import datetime
-import paho.mqtt.publish as publish
-import random
-import json
 import os
+import controllers
 
 from django.conf import settings
 #from django.conf.settings import PROJECT_ROOT
@@ -408,13 +406,13 @@ def control(request):
 
         if state == 'true':
             #result = control_light('open')
-            result = control_light_mqtt('open')
+            result = controllers.light_control('open')
             #print result
             print "the light is on...."
             logger.info("the light is on....")
         else:
             #result = control_light('close')
-            result = control_light_mqtt('close')
+            result = controllers.light_control('close')
             #print result
             print "the light if off...."
             logger.info("the light is off....")
@@ -429,23 +427,14 @@ def control(request):
 
 
 
-def get_string_from_json(path):
-    
-    file_object = open(path)
-    json_string = file_object.read()
-    json_file= json.loads(json_string)
-    return json_file
 
 
 def mqtt(request):
     user = request.user if request.user.is_authenticated() else None
     state = None    
     path = os.path.join(settings.PROJECT_ROOT, 'sensor_config.json')
-    display = get_string_from_json(path)
-
-
+    display = controllers.get_string_from_json(path)
     latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
-
     content = {
         'user': user,
         'active_menu': 'add_book',
@@ -453,8 +442,7 @@ def mqtt(request):
         'display':display,
         'latest_data':latest_data
     }
-   
-    
+       
     return render(request, 'management/mqtt.html', content)
 
 
@@ -493,30 +481,6 @@ def control_light(status):
     control_status = master.execute(control_adr, cst.READ_COILS, control_channel, 1 ) 
     time.sleep(sleep_time)
     return control_status[0]
-
-
-
-
-def control_light_mqtt(status):
-    
-    # temperature = random.randint(1, 10000)
-    # humidity = random.randint(1, 10000)
-    # lux = random.randint(1, 10000)
-
-    # msgs = [
-    #     {'topic':"temperature", 'payload':temperature},
-    #     {'topic':"humidity", 'payload':humidity},
-    #     {'topic':"lux", 'payload':lux},
-    #     ]
-
-    msgs = [
-        {'topic':"status", 'payload':status}
-        ]    
-
-    print msgs
-    publish.multiple(msgs, hostname="10.75.6.80")
-    return status
-
 
 
 
