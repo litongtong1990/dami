@@ -440,7 +440,7 @@ def get_string_from_json(path):
 def mqtt(request):
     user = request.user if request.user.is_authenticated() else None
     state = None    
-    path = os.path.join(settings.PROJECT_ROOT, 'test.json')
+    path = os.path.join(settings.PROJECT_ROOT, 'sensor_config.json')
     display = get_string_from_json(path)
 
 

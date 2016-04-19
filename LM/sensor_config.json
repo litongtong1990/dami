@@ -1,0 +1,13 @@
+{
+    "temperature": [
+        "id1",
+        "id2"
+    ],
+    "humidity": [
+        "id3",
+        "id4"
+    ],
+    "lux": [
+        "id5"
+    ]
+}
