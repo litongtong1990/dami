@@ -7,7 +7,9 @@
 
 <script type="text/javascript">
     $(document).ready(function(){
-        setInterval("startrequest()",1000); 
+
+        //setInterval("startrequest()",1000); 
+      
         }); 
 </script>
 
@@ -35,15 +37,18 @@
 
                                 $('#temperature').on('click', function (e) {
                                     $("#myModal_temperature").modal(); 
+                                    test('temperature');
                                 })
 
 
                                 $('#humidity').on('click', function (e) {
                                     $("#myModal_humidity").modal(); 
+                                    test('humidity');
                                 })
 
                                 $('#lux').on('click', function (e) {
                                     $("#myModal_lux").modal(); 
+                                    test('lux');
                                 })
 
                              </script>
@@ -62,43 +67,8 @@
                                            温度历史数据
                                         </h4>
                                      </div>
-                                     <div class="modal-body">
-                                            <table class="highchart temperature" data-graph-container-before="1" data-graph-type="line" style="display:none">
-                                                <caption>温度历史数据</caption>
-                                                <thead>
-                                                    <tr>                                  
-                                                        <th>时间</th>
-                                                        <th>平均温度</th>
-                                                        <th>最高温度</th> 
-                                                        <th>最低温度</th>                                                        
-                                                    </tr>
-                                                 </thead>
-                                                 <tbody>
 
-                                                    {% for item in latest_data %}
-                                                        <tr>
-                                                            <td>{{item.record_date}}</td>
-                                                            <td>{{item.temperature}}</td>
-                                                            <td>{{item.temperature_high}}</td>
-                                                            <td>{{item.temperature_low}}</td>
-                                                        </tr>
-
-                                                    {% endfor %}
-                                                
-                                                </tbody>
-                                            </table>
-                                     </div>
-
-
-                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" 
-                                           data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="tijiao_temperature" >
-                                           历史数据
-                                        </button>
-                                     </div>
-
+                                          <div id="container_temperature" style="width: 550px; height: 400px; margin: 0 auto"></div>                                     
 
                                   </div>
                             </div>
@@ -118,46 +88,13 @@
                                         </h4>
                                      </div>
                                      <div class="modal-body">
-                                            <table class="highchart humidity" data-graph-container-before="1" data-graph-type="line" style="display:none">
-                                                <caption>湿度历史数据</caption>
-                                                <thead>
-                                                    <tr>                                  
-                                                        <th>时间</th>
-                                                        <th>平均湿度</th>
-                                                        <th>最高湿度</th>
-                                                        <th>最低湿度</th>
-                                                    </tr>
-                                                 </thead>
-                                                 <tbody>
-
-                                                    {% for item in latest_data %}
-                                                        <tr>
-                                                            <td>{{item.record_date}}</td>
-                                                            <td>{{item.humidity}}</td>
-                                                            <td>{{item.humidity_high}}</td>
-                                                            <td>{{item.humidity_low}}</td>
-                                                        </tr>
-
-                                                    {% endfor %}
-                                                
-                                                </tbody>
-                                            </table>
+                                          <div id="container_humidity" style="width: 550px; height: 400px; margin: 0 auto"></div>
                                      </div>
-
-
-                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" 
-                                           data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="tijiao_humidity" >
-                                           历史数据
-                                        </button>
-                                     </div>
-
 
                                   </div>
                             </div>
                             </div>
+
 
 
                             <div class="modal fade" id="myModal_lux" tabindex="-1" role="dialog" 
@@ -174,95 +111,12 @@
                                         </h4>
                                      </div>
                                      <div class="modal-body">
-                                            <table class="highchart lux" data-graph-container-before="1" data-graph-type="line" style="display:none">
-                                                <caption>光照历史数据</caption>
-                                                
-                                                <thead>
-                                                    <tr>                                  
-                                                        <th>时间</th>
-                                                        <th>平均光照</th>
-                                                        <th>最高光照</th>
-                                                        <th>最低光照</th>
-                                                    </tr>
-                                                 </thead>
-                                                 <tbody>
-
-                                                    {% for item in latest_data %}
-                                                        <tr>
-                                                            <td>{{item.record_date}}</td>
-                                                            <td>{{item.light}}</td>
-                                                            <td>{{item.light_high}}</td>
-                                                            <td>{{item.light_low}}</td>
-                                                        </tr>
-
-                                                    {% endfor %}
-                                                
-                                                </tbody>
-
-
-                                            </table>
-
-
-
+                                          <div id="container_lux" style="width: 550px; height: 400px; margin: 0 auto"></div>
                                      </div>
-
-
-                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" 
-                                           data-dismiss="modal">关闭
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="tijiao_lux" >
-                                           历史数据
-                                        </button>
-                                     </div>
-
-
 
                                   </div>
                             </div>
                             </div>
-
-
-
-                            <script type="text/javascript">
-
-                                        var temperature_count=1;
-                                        var humidity_count=1;
-                                        var lux_count=1;
-
-                                        $('#tijiao_temperature').on('click', function (e) {
-                                        if(temperature_count==1)
-                                        {
-                                            $('table.highchart.temperature').highchartTable();
-                                            temperature_count++;                                            
-                                        }
-
-                                        })
-
-
-                                        $('#tijiao_humidity').on('click', function (e) {
-                                            if(humidity_count==1)
-                                            {
-                                                $('table.highchart.humidity').highchartTable();
-                                                humidity_count++;                                               
-                                            }
-
-                                        })
-
-
-                                        $('#tijiao_lux').on('click', function (e) {
-
-                                            if (lux_count==1)
-                                            {
-                                                 $('table.highchart.lux').highchartTable();   
-                                                 lux_count++;                                            
-                                            }
-
-                                        })
-
-
-                            </script>
-
 
 
 
@@ -315,6 +169,259 @@
                                         });
                                     });
                                 }
+
+                                function test(data_type) {
+
+
+                                            if(data_type == 'lux')
+                                            {
+                                            var title = {
+                                                   text: '光照历史数据'   
+                                               };
+                                               
+                                               var yAxis = {
+                                                  title: {
+                                                     text: '光照单位'
+                                                  },
+                                                  plotLines: [{
+                                                     value: 0,
+                                                     width: 1,
+                                                     color: '#808080'
+                                                  }]
+                                               };   
+
+                                               var tooltip = {
+                                                  valueSuffix: '\xB0C'
+                                               }
+
+                                               var legend = {
+                                                  layout: 'vertical',
+                                                  align: 'right',
+                                                  verticalAlign: 'middle',
+                                                  borderWidth: 0
+                                               };
+
+                                               var series = [];
+                                               var categories = [];    
+
+
+                                               var light = [];
+                                               var light_low = [];
+                                               var light_high = [];
+
+                                               {% for item in latest_data %}
+
+                                                    light.push({{item.light}});
+                                                    light_low.push({{item.light_low}});
+                                                    light_high.push({{item.light_high}});                     
+                                                    date = String("{{item.record_date}}");
+                                                    categories.push(date);                                                                
+                                               {% endfor %}
+
+
+                                               var xAxis = {
+                                                    categories: categories
+                                                   };
+
+                                               var series =  [
+                                                  {
+                                                     name: '平均光照',
+                                                     data: light
+                                                  }, 
+                                                  {
+                                                     name: '最高光照',
+                                                     data: light_high
+                                                  }, 
+                                                  {
+                                                     name: '最低光照',
+                                                     data: light_low
+                                                  }
+                                               ];
+
+
+
+                                               var json = {};
+                                               json.title = title;
+                                               json.xAxis = xAxis;
+                                               json.yAxis = yAxis;
+                                               json.tooltip = tooltip;
+                                               json.legend = legend;
+                                               json.series = series;      
+                                               $('#container_lux').highcharts(json);                                                      
+                                            }
+
+
+
+                                            else if(data_type == 'humidity')
+                                            {
+                                            var title = {
+                                                   text: '湿度历史数据'   
+                                               };
+                                               
+                                               var yAxis = {
+                                                  title: {
+                                                     text: '湿度单位'
+                                                  },
+                                                  plotLines: [{
+                                                     value: 0,
+                                                     width: 1,
+                                                     color: '#808080'
+                                                  }]
+                                               };   
+
+                                               var tooltip = {
+                                                  valueSuffix: '\xB0C'
+                                               }
+
+                                               var legend = {
+                                                  layout: 'vertical',
+                                                  align: 'right',
+                                                  verticalAlign: 'middle',
+                                                  borderWidth: 0
+                                               };
+
+                                               var series = [];
+                                               var categories = [];    
+
+
+                                               var humidity = [];
+                                               var humidity_low = [];
+                                               var humidity_high = [];
+
+                                               {% for item in latest_data %}
+
+                                                    humidity.push({{item.humidity}});
+                                                    humidity_low.push({{item.humidity_low}});
+                                                    humidity_high.push({{item.humidity_high}});                     
+                                                    date = String("{{item.record_date}}");
+                                                    categories.push(date);                                                                
+                                               {% endfor %}
+
+
+                                               var xAxis = {
+                                                    categories: categories
+                                                   };
+
+                                               var series =  [
+                                                  {
+                                                     name: '平均湿度',
+                                                     data: humidity
+                                                  }, 
+                                                  {
+                                                     name: '最高湿度',
+                                                     data: humidity_high
+                                                  }, 
+                                                  {
+                                                     name: '最低湿度',
+                                                     data: humidity_low
+                                                  }
+                                               ];
+
+
+
+                                               var json = {};
+                                               json.title = title;
+                                               json.xAxis = xAxis;
+                                               json.yAxis = yAxis;
+                                               json.tooltip = tooltip;
+                                               json.legend = legend;
+                                               json.series = series;      
+                                               $('#container_humidity').highcharts(json);                                                      
+                                            }
+
+
+
+
+
+                                            else if(data_type == 'temperature')
+                                            {
+                                            var title = {
+                                                   text: '温度历史数据'   
+                                               };
+                                               
+                                               var yAxis = {
+                                                  title: {
+                                                     text: '温度单位'
+                                                  },
+                                                  plotLines: [{
+                                                     value: 0,
+                                                     width: 1,
+                                                     color: '#808080'
+                                                  }]
+                                               };   
+
+                                               var tooltip = {
+                                                  valueSuffix: '\xB0C'
+                                               }
+
+                                               var legend = {
+                                                  layout: 'vertical',
+                                                  align: 'right',
+                                                  verticalAlign: 'middle',
+                                                  borderWidth: 0
+                                               };
+
+                                               var series = [];
+                                               var categories = [];    
+
+
+                                               var humidity = [];
+                                               var humidity_low = [];
+                                               var humidity_high = [];
+
+                                               {% for item in latest_data %}
+
+                                                    humidity.push({{item.temperature}});
+                                                    humidity_low.push({{item.temperature_low}});
+                                                    humidity_high.push({{item.temperature_high}});                     
+                                                    date = String("{{item.record_date}}");
+                                                    categories.push(date);                                                                
+                                               {% endfor %}
+
+
+                                               var xAxis = {
+                                                    categories: categories
+                                                   };
+
+                                               var series =  [
+                                                  {
+                                                     name: '平均温度',
+                                                     data: humidity
+                                                  }, 
+                                                  {
+                                                     name: '最高温度',
+                                                     data: humidity_high
+                                                  }, 
+                                                  {
+                                                     name: '最低温度',
+                                                     data: humidity_low
+                                                  }
+                                               ];
+
+
+
+                                               var json = {};
+                                               json.title = title;
+                                               json.xAxis = xAxis;
+                                               json.yAxis = yAxis;
+                                               json.tooltip = tooltip;
+                                               json.legend = legend;
+                                               json.series = series;      
+                                               $('#container_temperature').highcharts(json);                                                      
+                                            }
+
+
+
+
+
+
+
+
+                                }
+
+
+
+
 
                             </script>
 
