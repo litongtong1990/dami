@@ -9,11 +9,12 @@ def get_string_from_json(path):
     return json_file
 
 
-def light_control(status):
+def light_control(light_control,status):
+    
+    topic = light_control + '/' + 'status'
     msgs = [
-        {'topic':"status", 'payload':status}
+        {'topic':topic, 'payload':status}
         ]    
-        
     print msgs
     publish.multiple(msgs, hostname="10.75.6.80")
     return status

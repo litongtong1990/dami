@@ -403,25 +403,30 @@ def control(request):
     if request.method == 'POST':
         
         state=request.POST.get('state','')
+        controller_id=request.POST.get('controller_id','')
 
         if state == 'true':
             #result = control_light('open')
-            result = controllers.light_control('open')
+            result = controllers.light_control(controller_id,'open')
             #print result
             print "the light is on...."
             logger.info("the light is on....")
         else:
             #result = control_light('close')
-            result = controllers.light_control('close')
+            result = controllers.light_control(controller_id,'close')
             #print result
             print "the light if off...."
             logger.info("the light is off....")
         state = 'success'
 
+
+    path = os.path.join(settings.PROJECT_ROOT, 'controller_config.json')
+    display = controllers.get_string_from_json(path)
     content = {
         'user': user,
         'active_menu': 'add_book',
         'state': state,
+        'display':display
     }
     return render(request, 'management/control.html', content)
 

@@ -7,9 +7,17 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <input type="checkbox" name="my-checkbox" checked>
-        </div>
+        
+
+        {% for k,v in display.items %}
+            {%for id in v%}
+                <div class="col-md-6 col-md-offset-3">
+                    {{id}}
+                    <input type="checkbox" name="my-checkbox-{{id}}" checked>
+                </div>  
+            {% endfor %}
+        {% endfor %}
+
     </div>
 </div>
 
@@ -20,26 +28,30 @@
 
     <script type="text/javascript">
 
-        $('input[name="my-checkbox"]').bootstrapSwitch('state', true);
 
-        $('input[name="my-checkbox"]').on('switchChange.bootstrapSwitch', function(event, state) {
-          
-          // console.log(this); // DOM element
-          // console.log(event); // jQuery event
-          // console.log(state); // true | false
-        
-        $.ajax({
-                     type:"POST",
-                     url:"/control/",
-                     data: {
-                            'state': state,
-                            'csrfmiddlewaretoken': '{{ csrf_token }}'
-                            },
-                     success: function(){
-                         $('#message').html("<h2>Contact Form Submitted!</h2>") 
-                        }
+        {% for k,v in display.items %}
+            {%for id in v%}
+                $('input[name="my-checkbox-{{id}}"]').bootstrapSwitch('state', true);
+                $('input[name="my-checkbox-{{id}}"]').on('switchChange.bootstrapSwitch', function(event, state) {
+                          
+                $.ajax({
+                             type:"POST",
+                             url:"/control/",
+                             data: {
+                                    'state': state,
+                                    'controller_id':'{{id}}',
+                                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                                    },
+                             success: function(){
+                                 $('#message').html("<h2>Contact Form Submitted!</h2>") 
+                                }
+                        });
                 });
-        });
+            {% endfor %}
+        {% endfor %}
+
+
+        
 
     </script>
 
