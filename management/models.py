@@ -86,5 +86,17 @@ class Suyuan(models.Model):
 
 
 
+class controller_db(models.Model):
+    controller_id = models.CharField(max_length=128)
+    status = models.CharField(max_length=128)
+    record_date = models.DateTimeField(default=None)
+
+
+
+
+
+
+
+
 
 

@@ -1,5 +1,7 @@
 import json
 import paho.mqtt.publish as publish
+from models import controller_db
+from django.utils import timezone
 
 def get_string_from_json(path):
     
@@ -17,4 +19,6 @@ def light_control(light_control,status):
         ]    
     print msgs
     publish.multiple(msgs, hostname="10.75.6.80")
+    C = controller_db(controller_id=light_control, status=status,record_date=timezone.now())
+    C.save()
     return status
