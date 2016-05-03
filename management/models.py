@@ -93,6 +93,11 @@ class controller_db(models.Model):
 
 
 
+class sensor(models.Model):
+    sensor_id = models.CharField(max_length=128)
+    sensor_type = models.CharField(max_length=128)
+    data=models.FloatField(null=True, blank=True, default=None)
+    record_date = models.DateTimeField(default=None)
 
 
 
