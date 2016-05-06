@@ -100,6 +100,20 @@ class sensor(models.Model):
     record_date = models.DateTimeField(default=None)
 
 
+class Environment_Daily_new(models.Model):
+    sensor_id = models.CharField(max_length=128)    
+    temperature=models.FloatField(null=True, blank=True, default=None)
+    temperature_low=models.FloatField(null=True, blank=True, default=None)    
+    temperature_high=models.FloatField(null=True, blank=True, default=None)    
+    humidity=models.FloatField(null=True, blank=True, default=None)
+    humidity_low=models.FloatField(null=True, blank=True, default=None)
+    humidity_high=models.FloatField(null=True, blank=True, default=None)
+    light=models.FloatField(null=True, blank=True, default=None)
+    light_low=models.FloatField(null=True, blank=True, default=None)
+    light_high=models.FloatField(null=True, blank=True, default=None)        
+    record_date = models.DateTimeField(default=None)
+
+
 
 
 

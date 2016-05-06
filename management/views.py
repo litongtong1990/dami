@@ -19,8 +19,6 @@ import controllers
 from django.conf import settings
 #from django.conf.settings import PROJECT_ROOT
 
-from tasks import add
-
 
 
 #====== this is added for sensor===============
