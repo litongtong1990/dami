@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import MyUser, Book, Img,Environment,Environment_Daily,Environment_Weekly,Environment_Monthly,Suyuan
+from models import MyUser, Book, Img,Environment,Environment_Daily,Environment_Weekly,Environment_Monthly,Suyuan,Environment_Daily_new
 from django.core.urlresolvers import reverse, reverse_lazy
 from utils import permission_check
 import qrcode
@@ -17,6 +17,7 @@ import os
 import controllers
 
 from django.conf import settings
+from django.db.models import Q
 #from django.conf.settings import PROJECT_ROOT
 
 
@@ -441,12 +442,24 @@ def mqtt(request):
     path = os.path.join(settings.PROJECT_ROOT, 'sensor_config.json')
     display = controllers.get_string_from_json(path)
     latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
+
+
+    total_data = Environment_Daily_new.objects
+    id_number = total_data.order_by('sensor_id').values('sensor_id').distinct()
+    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))
+    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))
+    light_data = total_data.order_by('-record_date').filter(~Q(light = None))
+
+    
     content = {
         'user': user,
         'active_menu': 'add_book',
         'state': state,
         'display':display,
-        'latest_data':latest_data
+        'latest_data':latest_data,
+        'temperature_data':temperature_data,
+        'humidity_data':humidity_data,
+        'light_data':light_data
     }
        
     return render(request, 'management/mqtt.html', content)

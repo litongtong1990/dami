@@ -9,6 +9,7 @@ from django.utils import timezone
 import datetime
 
 
+
 def on_connect(client, userdata, rc):
     print("Connected with result code "+str(rc))
     # Subscribing in on_connect() means that if we lose the connection and
@@ -103,6 +104,6 @@ def crontab_daily():
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],light=light_average,light_high=light_high,light_low=light_low,
                                           record_date=datetime.date(year, month, day))            
                     E_list.append(E)
-                    print "Calculate the history data of %s-%s-%s successfully!"%(str(year),str(month),str(day))
+                    #print "Calculate the history data of %s-%s-%s successfully!"%(str(year),str(month),str(day))
 
     Environment_Daily_new.objects.bulk_create(E_list)            

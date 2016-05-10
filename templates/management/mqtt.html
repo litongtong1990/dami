@@ -46,7 +46,7 @@
                                     {%for id in v%}
                                     $('#{{k}}_{{id}}').on('click', function (e) {
                                         $("#myModal_{{k}}_{{id}}").modal();
-                                        highchart_render('{{k}}',"#container_{{k}}_{{id}}"); 
+                                        highchart_render('{{k}}',"#container_{{k}}_{{id}}","{{id}}"); 
                                     })
                                     {% endfor %}
                                   {% endfor %}
@@ -106,7 +106,7 @@
                                 }
 
 
-                                function highchart_render(data_type,container_id) {
+                                function highchart_render(data_type,container_id,sensor_id) {
 
 
                                             if(data_type == 'lux')
@@ -145,13 +145,29 @@
                                                var light_low = [];
                                                var light_high = [];
 
-                                               {% for item in latest_data %}
+                                               //for the old table
+                                               // {% for item in latest_data %}
 
+                                               //      light.push({{item.light}});
+                                               //      light_low.push({{item.light_low}});
+                                               //      light_high.push({{item.light_high}});                     
+                                               //      date = String("{{item.record_date}}");
+                                               //      categories.push(date);                                                                
+                                               // {% endfor %}
+
+
+                                               {% for item in light_data %}
+
+                                                    if('{{item.sensor_id}}'==sensor_id)
+                                                  {
                                                     light.push({{item.light}});
                                                     light_low.push({{item.light_low}});
                                                     light_high.push({{item.light_high}});                     
                                                     date = String("{{item.record_date}}");
-                                                    categories.push(date);                                                                
+                                                    categories.push(date);
+                                                  }
+
+                                                                
                                                {% endfor %}
 
 
@@ -223,15 +239,32 @@
                                                var humidity = [];
                                                var humidity_low = [];
                                                var humidity_high = [];
+                                               
+                                               //for the old table
+                                               // {% for item in latest_data %}
 
-                                               {% for item in latest_data %}
+                                               //      humidity.push({{item.humidity}});
+                                               //      humidity_low.push({{item.humidity_low}});
+                                               //      humidity_high.push({{item.humidity_high}});                     
+                                               //      date = String("{{item.record_date}}");
+                                               //      categories.push(date);                                                                
+                                               // {% endfor %}
 
+
+                                               {% for item in humidity_data %}
+
+                                                    if('{{item.sensor_id}}'==sensor_id)
+                                                  {
                                                     humidity.push({{item.humidity}});
                                                     humidity_low.push({{item.humidity_low}});
                                                     humidity_high.push({{item.humidity_high}});                     
                                                     date = String("{{item.record_date}}");
-                                                    categories.push(date);                                                                
+                                                    categories.push(date);
+                                                  }
+
+                                                                
                                                {% endfor %}
+
 
 
                                                var xAxis = {
@@ -305,13 +338,30 @@
                                                var temperature_low = [];
                                                var temperature_high = [];
 
-                                               {% for item in latest_data %}
+                                               //for the old table
+                                               
+                                               // {% for item in latest_data %}
 
+                                               //      temperature.push({{item.temperature}});
+                                               //      temperature_low.push({{item.temperature_low}});
+                                               //      temperature_high.push({{item.temperature_high}});       
+                                               //      date = String("{{item.record_date}}");
+                                               //      categories.push(date);                                                                
+                                               // {% endfor %}
+
+
+                                               {% for item in temperature_data %}
+
+                                                    if('{{item.sensor_id}}'==sensor_id)
+                                                  {
                                                     temperature.push({{item.temperature}});
                                                     temperature_low.push({{item.temperature_low}});
                                                     temperature_high.push({{item.temperature_high}});       
                                                     date = String("{{item.record_date}}");
-                                                    categories.push(date);                                                                
+                                                    categories.push(date);
+                                                  }
+
+                                                                
                                                {% endfor %}
 
 
