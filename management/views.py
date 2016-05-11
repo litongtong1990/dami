@@ -441,22 +441,23 @@ def mqtt(request):
     state = None    
     path = os.path.join(settings.PROJECT_ROOT, 'sensor_config.json')
     display = controllers.get_string_from_json(path)
-    latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
+    
+
+    #latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
 
 
     total_data = Environment_Daily_new.objects
     id_number = total_data.order_by('sensor_id').values('sensor_id').distinct()
-    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))
-    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))
-    light_data = total_data.order_by('-record_date').filter(~Q(light = None))
+    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))[0:len(id_number)*4]
+    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))[0:len(id_number)*4]
+    light_data = total_data.order_by('-record_date').filter(~Q(light = None))[0:len(id_number)*4]
 
-    
+
     content = {
         'user': user,
         'active_menu': 'add_book',
         'state': state,
         'display':display,
-        'latest_data':latest_data,
         'temperature_data':temperature_data,
         'humidity_data':humidity_data,
         'light_data':light_data

@@ -3,14 +3,15 @@
 
 from __future__ import absolute_import
 from datetime import timedelta
+from celery.schedules import crontab
 
 BROKER_URL = 'django://'
 
 
-# CELERYBEAT_SCHEDULE = {
-#     'add-every-2-seconds': {
-#          'task': 'management.tasks.add',
-#          'schedule': timedelta(seconds=2),
-#          'args': (16, 16)
-#     },
-# }
+CELERYBEAT_SCHEDULE = {
+    'calculate-every-midnight': {
+         'task': 'management.tasks.environment_daily_calculation',
+         'schedule': crontab(minute=0, hour=0),
+         'args': (16, 16)
+    },
+}

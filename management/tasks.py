@@ -37,7 +37,7 @@ def on_message(client, userdata, msg):
 
 
 @app.task
-def testtest():
+def mqtt_received():
     client = mqtt_client.Client()
     client.on_connect = on_connect
     client.on_message = on_message
@@ -47,20 +47,33 @@ def testtest():
 
 
 @app.task
-def crontab_daily():
+def environment_daily_calculation():
 
     sensor_all=sensor.objects.all()
+    environment_summary=Environment_Daily_new.objects.all()
 
     record_date_list=[]
+    record_date_summary_list=[]
+
     for item in sensor_all:
         record_date=[item.record_date.year,item.record_date.month,item.record_date.day]
         if record_date not in record_date_list:
             record_date_list.append(record_date)
 
+
+    for item in environment_summary:
+        record_date=[item.record_date.year,item.record_date.month,item.record_date.day]
+        if record_date not in record_date_summary_list:
+            record_date_summary_list.append(record_date)
+
+
     sensor_types = sensor.objects.values('sensor_type').distinct()
     sensor_ids = sensor.objects.values('sensor_id').distinct()        
     E_list=[]
-    for record_date in record_date_list:
+
+    add_list = [item for item in record_date_list if item not in record_date_summary_list]
+
+    for record_date in add_list:
         year=record_date[0]
         month=record_date[1]
         day=record_date[2]      
@@ -77,7 +90,7 @@ def crontab_daily():
                     temperature_low=min(temperature_list)
                     temperature_high=max(temperature_list)
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],temperature=temperature_average,temperature_low=temperature_low,temperature_high=temperature_high,
-                                          record_date=datetime.date(year, month, day))                
+                                          record_date=datetime.date(year, month, day)+ datetime.timedelta(hours=8)  )                
                     E_list.append(E)       
 
                 elif sensor_type['sensor_type'] == 'humidity':
@@ -90,7 +103,7 @@ def crontab_daily():
                     humidity_high=max(humidity_list)
 
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],humidity=humidity_average,humidity_low=humidity_low,humidity_high=humidity_high,
-                                          record_date=datetime.date(year, month, day))            
+                                          record_date=datetime.date(year, month, day)+ datetime.timedelta(hours=8))            
                     E_list.append(E)
 
                 elif sensor_type['sensor_type'] == 'lux':
@@ -102,8 +115,15 @@ def crontab_daily():
                     light_low=min(light_list)
                     light_high=max(light_list)
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],light=light_average,light_high=light_high,light_low=light_low,
-                                          record_date=datetime.date(year, month, day))            
+                                          record_date=datetime.date(year, month, day)+ datetime.timedelta(hours=8))            
                     E_list.append(E)
                     #print "Calculate the history data of %s-%s-%s successfully!"%(str(year),str(month),str(day))
 
-    Environment_Daily_new.objects.bulk_create(E_list)            
+    Environment_Daily_new.objects.bulk_create(E_list)
+
+
+
+
+
+
+
