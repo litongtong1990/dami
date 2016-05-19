@@ -86,9 +86,14 @@ def environment_daily_calculation():
                     result=sensor_all.filter(record_date__contains=datetime.date(year, month, day),sensor_type__contains=sensor_type['sensor_type'],sensor_id__contains=sensor_id['sensor_id'])                    
                     # Calculate the average value of temperature
                     temperature_list=[item.data for item in result]
-                    temperature_average=sum(temperature_list)/len(temperature_list)
-                    temperature_low=min(temperature_list)
-                    temperature_high=max(temperature_list)
+                    if len(temperature_list)!=0:
+                        temperature_average=sum(temperature_list)/len(temperature_list)
+                        temperature_low=min(temperature_list)
+                        temperature_high=max(temperature_list)                        
+                    else:
+                        temperature_average=0
+                        temperature_low=0
+                        temperature_high=0
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],temperature=temperature_average,temperature_low=temperature_low,temperature_high=temperature_high,
                                           record_date=datetime.date(year, month, day)+ datetime.timedelta(hours=8)  )                
                     E_list.append(E)       
@@ -98,9 +103,15 @@ def environment_daily_calculation():
                     result=sensor_all.filter(record_date__contains=datetime.date(year, month, day),sensor_type__contains=sensor_type['sensor_type'],sensor_id__contains=sensor_id['sensor_id'])
                     # Calculate the average value humidity
                     humidity_list=[item.data for item in result]
-                    humidity_average=sum(humidity_list)/len(humidity_list)
-                    humidity_low=min(humidity_list)
-                    humidity_high=max(humidity_list)
+                    if len(humidity_list)!=0:
+                        humidity_average=sum(humidity_list)/len(humidity_list)
+                        humidity_low=min(humidity_list)
+                        humidity_high=max(humidity_list)
+                    
+                    else:
+                        humidity_average=0
+                        humidity_low=0
+                        humidity_high=0                        
 
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],humidity=humidity_average,humidity_low=humidity_low,humidity_high=humidity_high,
                                           record_date=datetime.date(year, month, day)+ datetime.timedelta(hours=8))            
@@ -111,9 +122,15 @@ def environment_daily_calculation():
                     result=sensor_all.filter(record_date__contains=datetime.date(year, month, day),sensor_type__contains=sensor_type['sensor_type'],sensor_id__contains=sensor_id['sensor_id'])
                     # Calculate the average value lux
                     light_list=[item.data for item in result]
-                    light_average=sum(light_list)/len(light_list)
-                    light_low=min(light_list)
-                    light_high=max(light_list)
+                    if len(light_list)!=0:
+                        light_average=sum(light_list)/len(light_list)
+                        light_low=min(light_list)
+                        light_high=max(light_list)
+                    else:
+                        light_average=0
+                        light_low=0
+                        light_high=0
+
                     E = Environment_Daily_new(sensor_id=sensor_id['sensor_id'],light=light_average,light_high=light_high,light_low=light_low,
                                           record_date=datetime.date(year, month, day)+ datetime.timedelta(hours=8))            
                     E_list.append(E)

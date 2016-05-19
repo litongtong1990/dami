@@ -86,7 +86,7 @@ for sensor in ['temperature','humidity','lux']:
 print msgs
 
 
-publish.multiple(msgs, hostname="10.75.6.80")
+publish.multiple(msgs, hostname="101.86.93.63")
 
 
 

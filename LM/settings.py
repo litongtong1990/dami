@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'management.apps.ManagementConfig',
-    'django_crontab'
+    'management.apps.ManagementConfig'
+    # 'django_crontab'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -99,12 +99,15 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-CRONJOBS = [
+# CRONJOBS = [
 
-    ('*/1 * * * *', 'management.views.my_scheduled_job'),
-    ('59 23 * * *', 'management.views.crontab_daily_incremental')
+#     ('*/1 * * * *', 'management.views.my_scheduled_job'),
+#     ('59 23 * * *', 'management.views.crontab_daily_incremental')
 
-]
+# ]
+
+
+
 
 # CELERY_IMPORTS = ("tasks", ) 
 

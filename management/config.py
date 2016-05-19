@@ -12,6 +12,9 @@ CELERYBEAT_SCHEDULE = {
     'calculate-every-midnight': {
          'task': 'management.tasks.environment_daily_calculation',
          'schedule': crontab(minute=0, hour=0),
-         'args': (16, 16)
-    },
+         'args': ()
+    }
+
 }
+
+

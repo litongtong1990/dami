@@ -445,12 +445,12 @@ def mqtt(request):
 
     #latest_data=Environment_Daily.objects.order_by('-record_date')[0:4]
 
-
     total_data = Environment_Daily_new.objects
+    total_number = len(total_data.all())
     id_number = total_data.order_by('sensor_id').values('sensor_id').distinct()
-    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))[0:len(id_number)*4]
-    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))[0:len(id_number)*4]
-    light_data = total_data.order_by('-record_date').filter(~Q(light = None))[0:len(id_number)*4]
+    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))[0:max(len(id_number)*4,total_number)]
+    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))[0:max(len(id_number)*4,total_number)]
+    light_data = total_data.order_by('-record_date').filter(~Q(light = None))[0:max(len(id_number)*4,total_number)]
 
 
     content = {
