@@ -435,6 +435,43 @@ def control(request):
 
 
 
+def control_demo(request):
+    user = request.user if request.user.is_authenticated() else None
+    state = None
+    if request.method == 'POST':
+        
+        state=request.POST.get('state','')
+        controller_id=request.POST.get('controller_id','')
+
+        if state == 'true':
+            #result = control_light('open')
+            result = controllers.light_control(controller_id,'open')
+            #print result
+            print "the light is on...."
+            logger.info("the light is on....")
+        else:
+            #result = control_light('close')
+            result = controllers.light_control(controller_id,'close')
+            #print result
+            print "the light if off...."
+            logger.info("the light is off....")
+        state = 'success'
+
+
+    path = os.path.join(settings.PROJECT_ROOT, 'controller_demo_config.json')
+    display = controllers.get_string_from_json(path)
+    content = {
+        'user': user,
+        'active_menu': 'add_book',
+        'state': state,
+        'display':display
+    }
+    return render(request, 'management/control_demo.html', content)
+
+
+
+
+
 
 def mqtt(request):
     user = request.user if request.user.is_authenticated() else None
@@ -448,9 +485,9 @@ def mqtt(request):
     total_data = Environment_Daily_new.objects
     total_number = len(total_data.all())
     id_number = total_data.order_by('sensor_id').values('sensor_id').distinct()
-    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))[0:max(len(id_number)*4,total_number)]
-    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))[0:max(len(id_number)*4,total_number)]
-    light_data = total_data.order_by('-record_date').filter(~Q(light = None))[0:max(len(id_number)*4,total_number)]
+    temperature_data = total_data.order_by('-record_date').filter(~Q(temperature = None))[0:min(len(id_number)*4,total_number)]
+    humidity_data = total_data.order_by('-record_date').filter(~Q(humidity = None))[0:min(len(id_number)*4,total_number)]
+    light_data = total_data.order_by('-record_date').filter(~Q(light = None))[0:min(len(id_number)*4,total_number)]
 
 
     content = {
@@ -464,6 +501,19 @@ def mqtt(request):
     }
        
     return render(request, 'management/mqtt.html', content)
+
+
+
+def csa_demo(request):
+    user = request.user if request.user.is_authenticated() else None
+    state = None    
+
+
+    content = {
+        'user': user
+    }
+       
+    return render(request, 'management/csa_demo.html', content)
 
 
 
